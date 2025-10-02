@@ -4,7 +4,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VELL STORE - Kalkulator Robux & TCC</title>
+  <meta name="description" content="Kalkulator profesional untuk menghitung harga Robux dan TCC dengan akurasi tinggi">
+  <meta name="author" content="VELL STORE">
+  <meta name="keywords" content="kalkulator robux, kalkulator tcc, vell store, robux calculator">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://vellstore.github.io">
+  <meta property="og:title" content="VELL STORE - Kalkulator Robux & TCC">
+  <meta property="og:description" content="Kalkulator profesional untuk menghitung harga Robux dan TCC dengan akurasi tinggi">
+  <meta property="og:image" content="https://vellstore.github.io/assets/og-image.jpg">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://vellstore.github.io">
+  <meta property="twitter:title" content="VELL STORE - Kalkulator Robux & TCC">
+  <meta property="twitter:description" content="Kalkulator profesional untuk menghitung harga Robux dan TCC dengan akurasi tinggi">
+  <meta property="twitter:image" content="https://vellstore.github.io/assets/og-image.jpg">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16x16.png">
+  <link rel="manifest" href="./assets/site.webmanifest">
+  
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
   <style>
     :root {
       /* Dark Theme */
@@ -70,6 +97,7 @@
     
     html {
       font-size: 16px;
+      scroll-behavior: smooth;
     }
     
     body {
@@ -80,6 +108,40 @@
       transition: all 0.3s ease;
       min-height: 100vh;
       overflow-x: hidden;
+    }
+    
+    /* Loading Screen */
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+    
+    .loading-screen.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 3px solid var(--border-color);
+      border-top: 3px solid var(--accent-primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
     
     /* Header & Branding */
@@ -861,6 +923,23 @@
       font-size: 0.875rem;
     }
     
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .footer-link {
+      color: var(--accent-primary);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-link:hover {
+      color: var(--accent-secondary);
+    }
+    
     /* Responsive */
     @media (max-width: 768px) {
       .calculator-grid {
@@ -1089,6 +1168,11 @@
   </style>
 </head>
 <body>
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-spinner"></div>
+  </div>
+
   <!-- Info Modal -->
   <div class="info-modal" id="infoModal">
     <div class="info-modal-container">
@@ -1376,6 +1460,14 @@
 
   <!-- Footer -->
   <footer class="footer">
+    <div class="footer-links">
+      <a href="https://github.com/vellstore" class="footer-link" target="_blank">
+        <i class="fab fa-github"></i> GitHub
+      </a>
+      <a href="https://whatsapp.com/channel/0029Vb61CohGk1FyQoysmC0m" class="footer-link" target="_blank">
+        <i class="fab fa-whatsapp"></i> Channel
+      </a>
+    </div>
     <p>© 2024 VELL STORE - Professional Calculator Tools</p>
   </footer>
 
@@ -1756,12 +1848,18 @@
       document.getElementById("rateSelect").value = "16500";
       document.getElementById("profitSelect").value = "0";
       
+      // Hide loading screen
+      setTimeout(() => {
+        const loadingScreen = document.getElementById("loadingScreen");
+        loadingScreen.classList.add("hidden");
+      }, 500);
+      
       // Check if info modal should be shown
       if (!infoModalShown) {
         // Show info modal
         setTimeout(() => {
           document.getElementById("infoModal").classList.remove("hidden");
-        }, 500);
+        }, 1000);
       }
       
       // Focus on password input
