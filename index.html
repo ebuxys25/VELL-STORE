@@ -1469,7 +1469,7 @@
             <span>Panduan Penggunaan</span>
           </div>
           <div class="info-content" id="tccInfoContent">
-            TCC = (Harga USD × Rate USD + Profit) × Jumlah Robux. Harga USD adalah harga per 1000 Robux.
+            TCC = (Harga USD × Rate USD + Profit) × Jumlah Robux. Isi kedua input untuk menghitung total TCC.
           </div>
         </div>
         
@@ -1734,19 +1734,18 @@
         // Tidak mengupdate robux input secara otomatis
         
       } else if (robux > 0) {
-        // Only robux filled - use default USD (5.00)
-        let defaultUsd = 5.00;
+        // Only robux filled - use existing USD value or default if empty
+        let currentUsd = usd > 0 ? usd : 5.00;
         // Calculate subtotal per 1000 robux: (USD × Rate) + Profit
-        subtotal = (defaultUsd * rate) + profit;
+        subtotal = (currentUsd * rate) + profit;
         // Calculate total: subtotal × (robux / 1000)
         total = subtotal * (robux / 1000);
         
         label1 = "Jumlah Robux";
         value1 = robux.toLocaleString('id-ID');
-        formula = `($${defaultUsd.toFixed(2)} × ${rate.toLocaleString('id-ID')} + ${formatRupiah(profit)}) × ${robux.toLocaleString('id-ID')} = ${formatRupiah(total)}`;
+        formula = `($${currentUsd.toFixed(2)} × ${rate.toLocaleString('id-ID')} + ${formatRupiah(profit)}) × ${robux.toLocaleString('id-ID')} = ${formatRupiah(total)}`;
         
-        // Update USD input to default
-        document.getElementById("usdInput").value = defaultUsd.toFixed(2);
+        // Tidak mengupdate USD input secara otomatis
       }
       
       // Update detailed result
@@ -1937,8 +1936,8 @@
     style.textContent = `
       @keyframes shake {
         0%, 100% { transform: translateX(0); }
-        10%, 30%, 50%, 70%, 90% { transform: translateX(-8px) }
-        20%, 40%, 60%, 80% { transform: translateX(8px) }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-8px) }
+  20%, 40%, 60%, 80% { transform: translateX(8px) }
       }
     `;
     document.head.appendChild(style);
