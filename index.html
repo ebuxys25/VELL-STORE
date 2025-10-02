@@ -940,6 +940,21 @@
       color: var(--accent-secondary);
     }
     
+    /* TCC Dual Input */
+    .tcc-inputs-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    
+    .tcc-input-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+    }
+    
     /* Responsive */
     @media (max-width: 768px) {
       .calculator-grid {
@@ -1041,6 +1056,15 @@
       
       .info-modal-title {
         font-size: 1.25rem;
+      }
+      
+      .tcc-inputs-container {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+      
+      .tcc-input-divider {
+        display: none;
       }
     }
     
@@ -1334,14 +1358,22 @@
           <h2 class="card-title">TCC Kalkulator</h2>
         </div>
         
-        <div class="input-group">
-          <label class="input-label">Harga USD</label>
-          <input type="number" class="input-field" id="usdInput" step="0.01" placeholder="0.00" oninput="hitungTCC()" min="0">
+        <!-- TCC Dual Input Container -->
+        <div class="tcc-inputs-container">
+          <div class="input-group">
+            <label class="input-label">Harga USD</label>
+            <input type="number" class="input-field" id="usdInput" step="0.01" placeholder="0.00" oninput="debounceHitungTCC()" min="0">
+          </div>
+          
+          <div class="input-group">
+            <label class="input-label">Jumlah Robux</label>
+            <input type="number" class="input-field" id="tccRobuxInput" placeholder="0" oninput="debounceHitungTCC()" min="0">
+          </div>
         </div>
         
         <div class="input-group">
           <label class="input-label">Rate USD</label>
-          <select class="select-field" id="rateSelect" onchange="toggleCustomRate(); hitungTCC();">
+          <select class="select-field" id="rateSelect" onchange="toggleCustomRate(); debounceHitungTCC();">
             <option value="16000">16.000</option>
             <option value="16100">16.100</option>
             <option value="16200">16.200</option>
@@ -1360,13 +1392,13 @@
         <div id="customRate" class="custom-input">
           <div class="input-group">
             <label class="input-label">Rate Manual</label>
-            <input type="number" class="input-field" id="customRateInput" placeholder="Masukkan rate manual" oninput="hitungTCC()" min="0">
+            <input type="number" class="input-field" id="customRateInput" placeholder="Masukkan rate manual" oninput="debounceHitungTCC()" min="0">
           </div>
         </div>
         
         <div class="input-group">
           <label class="input-label">Profit</label>
-          <select class="select-field" id="profitSelect" onchange="toggleCustomProfit(); hitungTCC();">
+          <select class="select-field" id="profitSelect" onchange="toggleCustomProfit(); debounceHitungTCC();">
             <option value="0">Rp 0</option>
             <option value="1000">Rp 1.000</option>
             <option value="2000">Rp 2.000</option>
@@ -1385,7 +1417,7 @@
         <div id="customProfit" class="custom-input">
           <div class="input-group">
             <label class="input-label">Profit Manual</label>
-            <input type="number" class="input-field" id="customProfitInput" placeholder="Masukkan profit manual" oninput="hitungTCC()" min="0">
+            <input type="number" class="input-field" id="customProfitInput" placeholder="Masukkan profit manual" oninput="debounceHitungTCC()" min="0">
           </div>
         </div>
         
@@ -1397,7 +1429,7 @@
           
           <div class="result-details">
             <div class="result-detail-item">
-              <div class="result-detail-label">Harga USD</div>
+              <div class="result-detail-label" id="tccLabel1">Harga USD</div>
               <div class="result-detail-value" id="tccValue1">$0.00</div>
             </div>
             <div class="result-detail-item">
@@ -1415,7 +1447,7 @@
           </div>
           
           <div class="result-formula" id="tccFormula">
-            (USD × Rate) + Profit = Total
+            (USD × Rate + Profit) × Jumlah Robux = Total
           </div>
         </div>
         
@@ -1436,8 +1468,8 @@
             <i class="fas fa-info-circle info-icon"></i>
             <span>Panduan Penggunaan</span>
           </div>
-          <div class="info-content">
-            TCC = (Harga USD × Rate) + Profit. Masukkan nilai yang sesuai untuk menghitung total biaya transaksi.
+          <div class="info-content" id="tccInfoContent">
+            TCC = (Harga USD × Rate USD + Profit) × Jumlah Robux. Harga USD adalah harga per 1000 Robux.
           </div>
         </div>
         
@@ -1474,6 +1506,7 @@
   <script>
     let mode = "before";
     let debounceTimer;
+    let tccDebounceTimer;
     let isUnlocked = false;
     let infoModalShown = false;
 
@@ -1482,6 +1515,13 @@
         style: 'currency',
         currency: 'IDR',
         minimumFractionDigits: 0
+      }).format(angka);
+    }
+
+    function formatDecimal(angka, decimals) {
+      return new Intl.NumberFormat('id-ID', {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals
       }).format(angka);
     }
 
@@ -1595,37 +1635,47 @@
 
     // TCC Functions
     function toggleCustomRate() {
-      if (!isUnlocked) return;
-      
       const rateSelect = document.getElementById('rateSelect');
       const customRate = document.getElementById('customRate');
       
       if (rateSelect.value === 'custom') {
         customRate.classList.add('active');
-        document.getElementById('customRateInput').focus();
+        // Fokus ke input custom rate setelah muncul
+        setTimeout(() => {
+          document.getElementById('customRateInput').focus();
+        }, 100);
       } else {
         customRate.classList.remove('active');
+        // Trigger perhitungan setelah mengubah dari custom ke preset
+        debounceHitungTCC();
       }
     }
 
     function toggleCustomProfit() {
-      if (!isUnlocked) return;
-      
       const profitSelect = document.getElementById('profitSelect');
       const customProfit = document.getElementById('customProfit');
       
       if (profitSelect.value === 'custom') {
         customProfit.classList.add('active');
-        document.getElementById('customProfitInput').focus();
+        // Fokus ke input custom profit setelah muncul
+        setTimeout(() => {
+          document.getElementById('customProfitInput').focus();
+        }, 100);
       } else {
         customProfit.classList.remove('active');
+        // Trigger perhitungan setelah mengubah dari custom ke preset
+        debounceHitungTCC();
       }
     }
 
+    function debounceHitungTCC() {
+      clearTimeout(tccDebounceTimer);
+      tccDebounceTimer = setTimeout(hitungTCC, 300);
+    }
+
     function hitungTCC() {
-      if (!isUnlocked) return;
-      
       let usd = parseFloat(document.getElementById("usdInput").value) || 0;
+      let robux = parseFloat(document.getElementById("tccRobuxInput").value) || 0;
       let rateSelect = document.getElementById("rateSelect");
       let profitSelect = document.getElementById("profitSelect");
       let resultTable = document.getElementById("tccResultTable");
@@ -1646,25 +1696,72 @@
         profit = parseInt(profitSelect.value);
       }
       
-      if (usd <= 0 || rate <= 0) {
+      // Check if we have at least one input
+      if ((usd <= 0 && robux <= 0) || rate <= 0) {
         resultTable.classList.remove("active");
         return;
       }
       
-      resultTable.classList.add("active");
+      // Calculate based on which input has value
+      let subtotal = 0;
+      let total = 0;
+      let formula = "";
+      let label1 = "";
+      let value1 = "";
       
-      // Calculate values
-      let usdToIdr = usd * rate;
-      let total = Math.round(usdToIdr + profit);
+      if (usd > 0 && robux > 0) {
+        // Both inputs filled - calculate using USD as base
+        // Calculate subtotal per 1000 robux: (USD × Rate) + Profit
+        subtotal = (usd * rate) + profit;
+        // Calculate total: subtotal × (robux / 1000)
+        total = subtotal * (robux / 1000);
+        
+        label1 = "Harga USD";
+        value1 = `$${usd.toFixed(2)}`;
+        formula = `($${usd.toFixed(2)} × ${rate.toLocaleString('id-ID')} + ${formatRupiah(profit)}) × ${robux.toLocaleString('id-ID')} = ${formatRupiah(total)}`;
+        
+      } else if (usd > 0) {
+        // Only USD filled - use default 1000 robux
+        // Calculate subtotal per 1000 robux: (USD × Rate) + Profit
+        subtotal = (usd * rate) + profit;
+        // Calculate total: subtotal × 1 (for 1000 robux)
+        total = subtotal;
+        
+        label1 = "Harga USD";
+        value1 = `$${usd.toFixed(2)}`;
+        formula = `($${usd.toFixed(2)} × ${rate.toLocaleString('id-ID')} + ${formatRupiah(profit)}) × 1.000 = ${formatRupiah(total)}`;
+        
+        // Tidak mengupdate robux input secara otomatis
+        
+      } else if (robux > 0) {
+        // Only robux filled - use default USD (5.00)
+        let defaultUsd = 5.00;
+        // Calculate subtotal per 1000 robux: (USD × Rate) + Profit
+        subtotal = (defaultUsd * rate) + profit;
+        // Calculate total: subtotal × (robux / 1000)
+        total = subtotal * (robux / 1000);
+        
+        label1 = "Jumlah Robux";
+        value1 = robux.toLocaleString('id-ID');
+        formula = `($${defaultUsd.toFixed(2)} × ${rate.toLocaleString('id-ID')} + ${formatRupiah(profit)}) × ${robux.toLocaleString('id-ID')} = ${formatRupiah(total)}`;
+        
+        // Update USD input to default
+        document.getElementById("usdInput").value = defaultUsd.toFixed(2);
+      }
       
       // Update detailed result
       document.getElementById("tccTotal").innerText = formatRupiah(total);
-      document.getElementById("tccValue1").innerText = `$${usd.toFixed(2)}`;
+      document.getElementById("tccLabel1").innerText = label1;
+      document.getElementById("tccValue1").innerText = value1;
       document.getElementById("tccValue2").innerText = rate.toLocaleString('id-ID');
       document.getElementById("tccValue3").innerText = formatRupiah(profit);
-      document.getElementById("tccValue4").innerText = formatRupiah(usdToIdr);
-      document.getElementById("tccFormula").innerText = 
-        `($${usd.toFixed(2)} × ${rate.toLocaleString('id-ID')}) + ${formatRupiah(profit)} = ${formatRupiah(total)}`;
+      document.getElementById("tccValue4").innerText = formatRupiah(subtotal);
+      document.getElementById("tccFormula").innerText = formula;
+      
+      // Hanya tampilkan hasil jika kalkulator sudah dibuka
+      if (isUnlocked) {
+        resultTable.classList.add("active");
+      }
     }
 
     function resetRobux() {
@@ -1677,6 +1774,7 @@
       if (!isUnlocked) return;
       
       document.getElementById("usdInput").value = "";
+      document.getElementById("tccRobuxInput").value = "";
       document.getElementById("rateSelect").value = "16500";
       document.getElementById("profitSelect").value = "0";
       document.getElementById("customRateInput").value = "";
@@ -1818,6 +1916,9 @@
       // Set unlocked state
       isUnlocked = true;
       
+      // Trigger perhitungan setelah membuka kalkulator
+      debounceHitungTCC();
+      
       // Focus on first input
       setTimeout(() => {
         document.getElementById("usdInput").focus();
@@ -1868,4 +1969,3 @@
   </script>
 </body>
 </html>
-
