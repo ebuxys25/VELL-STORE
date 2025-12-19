@@ -3,26 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VELL STORE - Kalkulator Robux & TCC Professional</title>
-  <meta name="description" content="Kalkulator Robux dan TCC dari VELL STORE. Hitung konversi Robux ke Rupiah, Before Tax, After Tax, dan TCC dengan akurat dan mudah.">
-  <meta name="keywords" content="kalkulator robux, konversi robux, tcc calculator, vell store, robux to idr, top up robux">
-  <meta name="author" content="VELL STORE">
-  
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://yourwebsite.com/">
-  <meta property="og:title" content="VELL STORE - Kalkulator Robux & TCC Professional">
-  <meta property="og:description" content="Kalkulator Robux dan TCC dari VELL STORE. Hitung konversi Robux ke Rupiah dengan akurat dan mudah.">
-  <meta property="og:image" content="https://yourwebsite.com/og-image.jpg">
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  
+  <title>VELL STORE - Kalkulator Robux & TCC</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* ==========================================================================
-       CSS Variables
-       ========================================================================== */
     :root {
       /* Dark Theme */
       --bg-primary: #0a0e1a;
@@ -44,12 +27,6 @@
       --buy-button: #ff6b35;
       --important-bg: rgba(245, 158, 11, 0.1);
       --important-border: #f59e0b;
-      
-      /* Fire Colors */
-      --fire-yellow: #ffcc00;
-      --fire-orange: #ff9900;
-      --fire-red: #ff3300;
-      --fire-white: #ffffff;
       
       /* Light Theme */
       --light-bg-primary: #f8fafc;
@@ -84,10 +61,7 @@
       --important-bg: var(--light-important-bg);
       --important-border: var(--light-important-border);
     }
-
-    /* ==========================================================================
-       Base Styles
-       ========================================================================== */
+    
     * {
       margin: 0;
       padding: 0;
@@ -96,7 +70,6 @@
     
     html {
       font-size: 16px;
-      scroll-behavior: smooth;
     }
     
     body {
@@ -107,84 +80,18 @@
       transition: all 0.3s ease;
       min-height: 100vh;
       overflow-x: hidden;
-      position: relative;
-    }
-
-    /* Skip Link for Accessibility */
-    .skip-link {
-      position: absolute;
-      top: -40px;
-      left: 0;
-      background: var(--accent-primary);
-      color: white;
-      padding: 8px;
-      z-index: 100;
-      border-radius: 0 0 4px 0;
-    }
-    .skip-link:focus {
-      top: 0;
     }
     
-    /* ==========================================================================
-       Animated Background
-       ========================================================================== */
-    .fire-background {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: -1;
-      background: linear-gradient(180deg, #0a0e1a 0%, #1a1f2e 50%, #0a0e1a 100%);
-      overflow: hidden;
-    }
-    
-    .fire-particle {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      background: radial-gradient(circle, var(--fire-yellow) 0%, var(--fire-orange) 50%, transparent 70%);
-      border-radius: 50%;
-      animation: float-up 8s infinite linear;
-      opacity: 0;
-    }
-    
-    @keyframes float-up {
-      0% { transform: translateY(100vh) translateX(0) scale(0); opacity: 0; }
-      10% { opacity: 1; }
-      90% { opacity: 1; }
-      100% { transform: translateY(-100vh) translateX(100px) scale(1.5); opacity: 0; }
-    }
-    
-    .fire-glow {
-      position: absolute;
-      width: 200px;
-      height: 200px;
-      background: radial-gradient(circle, var(--fire-orange) 0%, var(--fire-red) 30%, transparent 70%);
-      border-radius: 50%;
-      filter: blur(40px);
-      animation: pulse-glow 4s ease-in-out infinite;
-      pointer-events: none;
-    }
-    
-    @keyframes pulse-glow {
-      0%, 100% { transform: scale(1); opacity: 0.3; }
-      50% { transform: scale(1.2); opacity: 0.5; }
-    }
-    
-    /* ==========================================================================
-       Header & Branding
-       ========================================================================== */
+    /* Header & Branding */
     .app-header {
-      background: linear-gradient(135deg, rgba(30, 35, 49, 0.95) 0%, rgba(21, 25, 35, 0.95) 100%);
+      background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
       padding: 1rem 0;
       border-bottom: 1px solid var(--border-color);
       position: sticky;
       top: 0;
       z-index: 100;
       backdrop-filter: blur(10px);
-      box-shadow: 0 4px 20px rgba(255, 153, 0, 0.1);
+      background-color: rgba(30, 35, 49, 0.8);
     }
     
     .brand-container {
@@ -205,7 +112,7 @@
     .brand-logo {
       width: 3rem;
       height: 3rem;
-      background: linear-gradient(135deg, var(--fire-orange), var(--fire-red));
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
       border-radius: 0.75rem;
       display: flex;
       align-items: center;
@@ -214,16 +121,6 @@
       font-size: 1.25rem;
       color: white;
       flex-shrink: 0;
-      position: relative;
-      animation: flame-flicker 2s ease-in-out infinite;
-      box-shadow: 0 0 20px rgba(255, 153, 0, 0.5);
-    }
-    
-    @keyframes flame-flicker {
-      0%, 100% { transform: scale(1) rotate(0deg); box-shadow: 0 0 20px rgba(255, 153, 0, 0.5); }
-      25% { transform: scale(1.05) rotate(-2deg); box-shadow: 0 0 30px rgba(255, 153, 0, 0.7); }
-      50% { transform: scale(1.1) rotate(0deg); box-shadow: 0 0 25px rgba(255, 204, 0, 0.6); }
-      75% { transform: scale(1.05) rotate(2deg); box-shadow: 0 0 35px rgba(255, 51, 0, 0.8); }
     }
     
     .brand-name-container {
@@ -234,22 +131,14 @@
     .brand-name {
       font-size: 1.75rem;
       font-weight: 700;
-      background: linear-gradient(135deg, var(--fire-yellow), var(--fire-orange), var(--fire-red));
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       letter-spacing: -0.03125rem;
-      animation: text-glow 3s ease-in-out infinite;
     }
     
-    @keyframes text-glow {
-      0%, 100% { filter: drop-shadow(0 0 10px rgba(255, 153, 0, 0.5)); }
-      50% { filter: drop-shadow(0 0 20px rgba(255, 153, 0, 0.8)); }
-    }
-    
-    /* ==========================================================================
-       Theme Toggle
-       ========================================================================== */
+    /* Theme Toggle */
     .theme-toggle {
       background: var(--bg-input);
       border: 1px solid var(--border-color);
@@ -264,56 +153,26 @@
       transition: all 0.3s ease;
       font-size: 1.25rem;
       flex-shrink: 0;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .theme-toggle::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      background: radial-gradient(circle, var(--fire-yellow) 0%, var(--fire-orange) 100%);
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      transition: all 0.3s ease;
-    }
-    
-    .theme-toggle:hover::before {
-      width: 100%;
-      height: 100%;
     }
     
     .theme-toggle:hover {
-      transform: translateY(-0.125rem) scale(1.05);
-      box-shadow: 0 8px 25px rgba(255, 153, 0, 0.3);
+      background: var(--accent-primary);
       color: white;
-      z-index: 1;
+      transform: translateY(-0.125rem);
+      box-shadow: var(--shadow);
     }
     
-    .theme-toggle i {
-      position: relative;
-      z-index: 2;
-    }
-    
-    /* ==========================================================================
-       Main Layout
-       ========================================================================== */
-    main {
+    /* Main Container */
+    .main-container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 2.5rem 1rem;
       width: 100%;
-      position: relative;
     }
     
-    /* ==========================================================================
-       Important Notice
-       ========================================================================== */
+    /* Important Notice */
     .important-notice {
-      background: linear-gradient(135deg, var(--important-bg), rgba(255, 153, 0, 0.05));
+      background: var(--important-bg);
       border: 1px solid var(--important-border);
       border-radius: 0.75rem;
       padding: 1rem;
@@ -325,12 +184,6 @@
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 1rem;
-      animation: slide-in-left 0.6s ease-out;
-    }
-    
-    @keyframes slide-in-left {
-      from { opacity: 0; transform: translateX(-50px); }
-      to { opacity: 1; transform: translateX(0); }
     }
     
     .important-notice::before {
@@ -340,13 +193,7 @@
       left: 0;
       width: 4px;
       height: 100%;
-      background: linear-gradient(180deg, var(--fire-yellow), var(--fire-orange), var(--fire-red));
-      animation: flame-border 2s ease-in-out infinite;
-    }
-    
-    @keyframes flame-border {
-      0%, 100% { opacity: 0.7; box-shadow: 0 0 10px var(--fire-orange); }
-      50% { opacity: 1; box-shadow: 0 0 20px var(--fire-red); }
+      background: var(--warning);
     }
     
     .important-notice-content {
@@ -370,7 +217,7 @@
     }
     
     .important-notice-button {
-      background: linear-gradient(135deg, var(--fire-orange), var(--fire-red));
+      background: var(--warning);
       color: white;
       border: none;
       border-radius: 0.625rem;
@@ -384,33 +231,15 @@
       gap: 0.5rem;
       white-space: nowrap;
       flex-shrink: 0;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .important-notice-button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.5s ease;
-    }
-    
-    .important-notice-button:hover::before {
-      left: 100%;
     }
     
     .important-notice-button:hover {
-      transform: translateY(-0.125rem) scale(1.05);
-      box-shadow: 0 8px 25px rgba(255, 153, 0, 0.4);
+      background: #e0a040;
+      transform: translateY(-0.125rem);
+      box-shadow: 0 0.25rem 0.5rem -0.125rem rgba(245, 158, 11, 0.3);
     }
     
-    /* ==========================================================================
-       Calculator Grid & Cards
-       ========================================================================== */
+    /* Calculator Grid */
     .calculator-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(min(100%, 500px), 1fr));
@@ -418,22 +247,17 @@
       margin-top: 1.875rem;
     }
     
+    /* Calculator Card */
     .calculator-card {
-      background: linear-gradient(135deg, rgba(30, 35, 49, 0.95), rgba(42, 49, 66, 0.95));
+      background: var(--bg-card);
       border-radius: 1rem;
       padding: 1.875rem;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), 0 0 60px rgba(255, 153, 0, 0.1);
+      box-shadow: var(--shadow);
       border: 1px solid var(--border-color);
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
       width: 100%;
-      animation: fade-in-up 0.8s ease-out;
-    }
-    
-    @keyframes fade-in-up {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
     }
     
     .calculator-card::before {
@@ -443,35 +267,12 @@
       left: 0;
       right: 0;
       height: 0.25rem;
-      background: linear-gradient(90deg, var(--fire-yellow), var(--fire-orange), var(--fire-red));
-      animation: flame-gradient 3s ease-in-out infinite;
-    }
-    
-    @keyframes flame-gradient {
-      0%, 100% { background: linear-gradient(90deg, var(--fire-yellow), var(--fire-orange), var(--fire-red)); }
-      50% { background: linear-gradient(90deg, var(--fire-red), var(--fire-yellow), var(--fire-orange)); }
-    }
-    
-    .calculator-card::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(255, 153, 0, 0.1) 0%, transparent 70%);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      pointer-events: none;
-    }
-    
-    .calculator-card:hover::after {
-      opacity: 1;
+      background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
     }
     
     .calculator-card:hover {
-      transform: translateY(-0.5rem) scale(1.02);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 80px rgba(255, 153, 0, 0.2);
+      transform: translateY(-0.3125rem);
+      box-shadow: 0 0.625rem 0.9375rem -0.1875rem rgba(0, 0, 0, 0.3), 0 0.25rem 0.375rem -0.125rem rgba(0, 0, 0, 0.2);
     }
     
     .card-header {
@@ -484,7 +285,7 @@
     .card-icon {
       width: 3rem;
       height: 3rem;
-      background: linear-gradient(135deg, var(--fire-orange), var(--fire-red));
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
       border-radius: 0.75rem;
       display: flex;
       align-items: center;
@@ -492,28 +293,15 @@
       color: white;
       font-size: 1.25rem;
       flex-shrink: 0;
-      animation: icon-pulse 2s ease-in-out infinite;
-      box-shadow: 0 0 20px rgba(255, 153, 0, 0.4);
-    }
-    
-    @keyframes icon-pulse {
-      0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 153, 0, 0.4); }
-      50% { transform: scale(1.1); box-shadow: 0 0 30px rgba(255, 153, 0, 0.6); }
     }
     
     .card-title {
       font-size: 1.375rem;
       font-weight: 700;
       color: var(--text-primary);
-      background: linear-gradient(135deg, var(--text-primary), var(--fire-orange));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
     }
-
-    /* ==========================================================================
-       Tabs
-       ========================================================================== */
+    
+    /* Tabs */
     .tabs-container {
       margin-bottom: 1.5625rem;
     }
@@ -524,7 +312,6 @@
       border-radius: 0.75rem;
       padding: 0.25rem;
       gap: 0.25rem;
-      position: relative;
     }
     
     .tab-button {
@@ -540,19 +327,6 @@
       transition: all 0.3s ease;
       position: relative;
       white-space: nowrap;
-      overflow: hidden;
-    }
-    
-    .tab-button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 0;
-      height: 100%;
-      background: linear-gradient(90deg, var(--fire-yellow), var(--fire-orange));
-      transition: width 0.3s ease;
-      z-index: -1;
     }
     
     .tab-button.active {
@@ -561,18 +335,11 @@
       box-shadow: 0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.1);
     }
     
-    .tab-button.active::before {
-      width: 100%;
-    }
-    
     .tab-button:hover:not(.active) {
       color: var(--text-primary);
-      transform: translateY(-2px);
     }
-
-    /* ==========================================================================
-       Input Groups & Buttons
-       ========================================================================== */
+    
+    /* Input Groups */
     .input-group {
       margin-bottom: 1.25rem;
     }
@@ -585,7 +352,7 @@
       margin-bottom: 0.5rem;
     }
     
-    .input-field, .select-field {
+    .input-field {
       width: 100%;
       padding: 0.875rem 1rem;
       background: var(--bg-input);
@@ -594,18 +361,24 @@
       color: var(--text-primary);
       font-size: 1rem;
       transition: all 0.3s ease;
-      position: relative;
     }
     
-    .input-field:focus, .select-field:focus {
+    .input-field:focus {
       outline: none;
-      border-color: var(--fire-orange);
-      box-shadow: 0 0 0 0.1875rem rgba(255, 153, 0, 0.2), 0 0 20px rgba(255, 153, 0, 0.1);
-      transform: scale(1.02);
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 0.1875rem rgba(79, 70, 229, 0.1);
     }
     
     .select-field {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: 0.625rem;
+      color: var(--text-primary);
+      font-size: 1rem;
       cursor: pointer;
+      transition: all 0.3s ease;
       appearance: none;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23a0aec0' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
@@ -613,6 +386,13 @@
       padding-right: 2.5rem;
     }
     
+    .select-field:focus {
+      outline: none;
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 0.1875rem rgba(79, 70, 229, 0.1);
+    }
+    
+    /* Quick Buttons */
     .quick-buttons {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(5rem, 1fr));
@@ -634,40 +414,16 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      position: relative;
-    }
-    
-    .quick-button::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      background: radial-gradient(circle, var(--fire-orange), var(--fire-red));
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      transition: all 0.3s ease;
-    }
-    
-    .quick-button:hover::before {
-      width: 100%;
-      height: 100%;
     }
     
     .quick-button:hover {
+      background: var(--accent-primary);
       color: white;
-      border-color: var(--fire-orange);
-      transform: translateY(-0.125rem) scale(1.05);
-      box-shadow: 0 5px 15px rgba(255, 153, 0, 0.3);
-      z-index: 1;
+      border-color: var(--accent-primary);
+      transform: translateY(-0.125rem);
     }
     
-    .quick-button span {
-      position: relative;
-      z-index: 1;
-    }
-    
+    /* Action Buttons */
     .action-buttons {
       display: flex;
       gap: 0.75rem;
@@ -682,90 +438,77 @@
       font-weight: 600;
       font-size: 0.9375rem;
       cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: all 0.3s ease;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
       white-space: nowrap;
-      position: relative;
-      overflow: hidden;
     }
     
-    .action-button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.5s ease;
+    .action-button.primary {
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      color: white;
     }
     
-    .action-button:hover::before {
-      left: 100%;
+    .action-button.secondary {
+      background: var(--bg-input);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
     }
     
-    .action-button.primary { background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); color: white; }
-    .action-button.secondary { background: var(--bg-input); color: var(--text-primary); border: 1px solid var(--border-color); }
-    .action-button.whatsapp { background: linear-gradient(135deg, var(--whatsapp), #128C7E); color: white; }
-    .action-button.buy { background: linear-gradient(135deg, var(--buy-button), #ff5722); color: white; }
+    .action-button.whatsapp {
+      background: var(--whatsapp);
+      color: white;
+    }
+    
+    .action-button.buy {
+      background: var(--buy-button);
+      color: white;
+    }
     
     .action-button:hover {
-      transform: translateY(-0.125rem) scale(1.05);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      transform: translateY(-0.125rem);
+      box-shadow: var(--shadow);
     }
-    .action-button.primary:hover { box-shadow: 0 10px 30px rgba(79, 70, 229, 0.4); }
-    .action-button.whatsapp:hover { box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4); }
-    .action-button.buy:hover { box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4); }
-
-    /* ==========================================================================
-       Result Table & Custom Inputs
-       ========================================================================== */
+    
+    .action-button.primary:hover {
+      box-shadow: 0 0.625rem 0.9375rem -0.1875rem rgba(79, 70, 229, 0.3), 0 0.25rem 0.375rem -0.125rem rgba(79, 70, 229, 0.2);
+    }
+    
+    .action-button.whatsapp:hover {
+      box-shadow: 0 0.625rem 0.9375rem -0.1875rem rgba(37, 211, 102, 0.3), 0 0.25rem 0.375rem -0.125rem rgba(37, 211, 102, 0.2);
+    }
+    
+    .action-button.buy:hover {
+      box-shadow: 0 0.625rem 0.9375rem -0.1875rem rgba(255, 107, 53, 0.3), 0 0.25rem 0.375rem -0.125rem rgba(255, 107, 53, 0.2);
+    }
+    
+    /* Result Table */
     .result-table {
-      background: linear-gradient(135deg, rgba(42, 49, 66, 0.8), transparent);
+      background: linear-gradient(135deg, var(--bg-input), transparent);
       border-radius: 0.75rem;
       padding: 1.25rem;
       margin-top: 1.5625rem;
       border: 1px solid var(--border-color);
       display: none;
       width: 100%;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .result-table::before {
-      content: '';
-      position: absolute;
-      top: -2px;
-      left: -2px;
-      right: -2px;
-      bottom: -2px;
-      background: linear-gradient(45deg, var(--fire-yellow), var(--fire-orange), var(--fire-red), var(--fire-yellow));
-      border-radius: 0.75rem;
-      opacity: 0;
-      z-index: -1;
-      animation: border-rotate 3s linear infinite;
-    }
-    
-    @keyframes border-rotate {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
     }
     
     .result-table.active {
       display: block;
-      animation: slideUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-    
-    .result-table.active::before {
-      opacity: 0.3;
+      animation: slideUp 0.3s ease;
     }
     
     @keyframes slideUp {
-      from { opacity: 0; transform: translateY(20px) scale(0.95); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
+      from {
+        opacity: 0;
+        transform: translateY(0.625rem);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
     
     .result-total {
@@ -782,16 +525,10 @@
     .result-total-value {
       font-size: 2rem;
       font-weight: 700;
-      background: linear-gradient(135deg, var(--fire-yellow), var(--fire-orange), var(--fire-red));
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      animation: value-glow 2s ease-in-out infinite;
-    }
-    
-    @keyframes value-glow {
-      0%, 100% { filter: drop-shadow(0 0 10px rgba(255, 153, 0, 0.5)); }
-      50% { filter: drop-shadow(0 0 20px rgba(255, 153, 0, 0.8)); }
     }
     
     .result-details {
@@ -806,12 +543,6 @@
       border: 1px solid var(--border-color);
       border-radius: 0.625rem;
       padding: 0.9375rem;
-      transition: all 0.3s ease;
-    }
-    
-    .result-detail-item:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(255, 153, 0, 0.2);
     }
     
     .result-detail-label {
@@ -838,6 +569,7 @@
       word-break: break-all;
     }
     
+    /* Custom Input */
     .custom-input {
       margin-top: 0.9375rem;
       display: none;
@@ -845,19 +577,23 @@
     
     .custom-input.active {
       display: block;
-      animation: slideDown 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      animation: slideDown 0.3s ease;
     }
     
     @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-20px) scale(0.95); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
+      from {
+        opacity: 0;
+        transform: translateY(-0.625rem);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
     
-    /* ==========================================================================
-       Info Box
-       ========================================================================== */
+    /* Info Box */
     .info-box {
-      background: linear-gradient(135deg, var(--info-bg), rgba(255, 153, 0, 0.05));
+      background: var(--info-bg);
       border: 1px solid var(--info-border);
       border-radius: 0.75rem;
       padding: 1rem;
@@ -873,8 +609,7 @@
       left: 0;
       width: 4px;
       height: 100%;
-      background: linear-gradient(180deg, var(--fire-yellow), var(--fire-orange), var(--fire-red));
-      animation: flame-border 2s ease-in-out infinite;
+      background: var(--accent-primary);
     }
     
     .info-title {
@@ -896,264 +631,216 @@
       color: var(--accent-primary);
     }
     
-    /* ==========================================================================
-       New Features: History, Toast, Loading
-       ========================================================================== */
-    .history-container {
-        margin-top: 2rem;
-        padding: 1.5rem;
-        background: var(--bg-card);
-        border-radius: 1rem;
-        border: 1px solid var(--border-color);
-    }
-    .history-title {
-        font-size: 1.25rem;
-        font-weight: 600;
-        margin-bottom: 1rem;
-        color: var(--text-primary);
-    }
-    .history-list {
-        list-style: none;
-    }
-    .history-item {
-        padding: 0.75rem;
-        background: var(--bg-input);
-        border-radius: 0.5rem;
-        margin-bottom: 0.5rem;
-        font-size: 0.875rem;
-        color: var(--text-secondary);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .history-item .timestamp {
-        font-size: 0.75rem;
-        color: var(--text-secondary);
-        opacity: 0.7;
-    }
-
-    .toast {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: var(--success);
-      color: white;
-      padding: 12px 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      transform: translateY(100px);
-      opacity: 0;
-      transition: transform 0.3s ease, opacity 0.3s ease;
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    
-    .toast.show {
-      transform: translateY(0);
-      opacity: 1;
-    }
-
-    .loading-indicator {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.7);
-      display: none; /* Hidden by default */
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      flex-direction: column;
-    }
-    .loading-indicator.active {
-      display: flex;
-    }
-    .spinner {
-      border: 4px solid rgba(255, 255, 255, 0.3);
-      border-radius: 50%;
-      border-top: 4px solid var(--fire-orange);
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    .loading-text {
-      margin-top: 15px;
-      color: white;
-      font-size: 1rem;
-    }
-
-    /* ==========================================================================
-       FAQ & Contact Section
-       ========================================================================== */
-    .faq-section, .contact-section {
-        margin-top: 3rem;
-        padding: 2rem;
-        background: var(--bg-card);
-        border-radius: 1rem;
-        border: 1px solid var(--border-color);
-    }
-    .section-title {
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin-bottom: 1.5rem;
-        text-align: center;
-        background: linear-gradient(135deg, var(--text-primary), var(--fire-orange));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-    .faq-item {
-        margin-bottom: 1.5rem;
-    }
-    .faq-item h3 {
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: var(--text-primary);
-        margin-bottom: 0.5rem;
-    }
-    .faq-item p {
-        font-size: 0.9rem;
-        color: var(--text-secondary);
-        line-height: 1.6;
-    }
-    .contact-form .form-group {
-        margin-bottom: 1.5rem;
-    }
-    .contact-form label {
-        display: block;
-        font-size: 0.875rem;
-        font-weight: 500;
-        color: var(--text-secondary);
-        margin-bottom: 0.5rem;
-    }
-    .contact-form input, .contact-form textarea {
-        width: 100%;
-        padding: 0.875rem 1rem;
-        background: var(--bg-input);
-        border: 1px solid var(--border-color);
-        border-radius: 0.625rem;
-        color: var(--text-primary);
-        font-size: 1rem;
-        transition: all 0.3s ease;
-    }
-    .contact-form input:focus, .contact-form textarea:focus {
-        outline: none;
-        border-color: var(--fire-orange);
-        box-shadow: 0 0 0 0.1875rem rgba(255, 153, 0, 0.2);
-    }
-    .contact-form button {
-        background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-        color: white;
-        border: none;
-        border-radius: 0.625rem;
-        padding: 0.875rem 2rem;
-        font-weight: 600;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        width: 100%;
-    }
-    .contact-form button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(79, 70, 229, 0.4);
-    }
-
-    /* ==========================================================================
-       Footer
-       ========================================================================== */
-    footer {
+    /* Footer */
+    .footer {
       text-align: center;
       padding: 1.875rem 1rem;
       margin-top: 3.125rem;
       border-top: 1px solid var(--border-color);
       color: var(--text-secondary);
       font-size: 0.875rem;
-      position: relative;
     }
     
-    footer::before {
-      content: '';
-      position: absolute;
-      top: -1px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100px;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--fire-orange), transparent);
-    }
-    
-    /* ==========================================================================
-       Responsive Design
-       ========================================================================== */
+    /* Responsive */
     @media (max-width: 768px) {
-      .calculator-grid { grid-template-columns: 1fr; gap: 1.25rem; }
-      .result-details { grid-template-columns: 1fr; gap: 0.75rem; }
-      .quick-buttons { grid-template-columns: repeat(3, 1fr); gap: 0.375rem; }
-      .brand-container { flex-direction: row; align-items: center; justify-content: space-between; gap: 1rem; }
-      .brand { flex: 1; justify-content: flex-start; }
-      .brand-name { font-size: 1.5rem; }
-      .brand-logo { width: 2.5rem; height: 2.5rem; font-size: 1.125rem; }
-      .theme-toggle { width: 2.5rem; height: 2.5rem; font-size: 1.125rem; }
-      main { padding: 1.25rem 0.9375rem; }
-      .calculator-card { padding: 1.25rem; }
-      .card-header { margin-bottom: 1.25rem; }
-      .input-group { margin-bottom: 1rem; }
-      .result-table { padding: 1rem; margin-top: 1.25rem; }
-      .result-details { margin-bottom: 1rem; }
-      .result-detail-item { padding: 0.75rem; }
-      .action-buttons { flex-direction: column; gap: 0.5rem; }
-      .info-box { padding: 0.75rem; margin-top: 0.75rem; }
-      .important-notice { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
-      .important-notice-button { align-self: stretch; justify-content: center; }
+      .calculator-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+      }
+      
+      .result-details {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+      
+      .quick-buttons {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.375rem;
+      }
+      
+      .brand-container {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+      
+      .brand {
+        flex: 1;
+        justify-content: flex-start;
+      }
+      
+      .brand-name {
+        font-size: 1.5rem;
+      }
+      
+      .brand-logo {
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 1.125rem;
+      }
+      
+      .theme-toggle {
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 1.125rem;
+      }
+      
+      .main-container {
+        padding: 1.25rem 0.9375rem;
+      }
+      
+      .calculator-card {
+        padding: 1.25rem;
+      }
+      
+      .card-header {
+        margin-bottom: 1.25rem;
+      }
+      
+      .input-group {
+        margin-bottom: 1rem;
+      }
+      
+      .result-table {
+        padding: 1rem;
+        margin-top: 1.25rem;
+      }
+      
+      .result-details {
+        margin-bottom: 1rem;
+      }
+      
+      .result-detail-item {
+        padding: 0.75rem;
+      }
+      
+      .action-buttons {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      
+      .info-box {
+        padding: 0.75rem;
+        margin-top: 0.75rem;
+      }
+      
+      .important-notice {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+      }
+      
+      .important-notice-button {
+        align-self: stretch;
+        justify-content: center;
+      }
     }
     
     @media (max-width: 480px) {
-      html { font-size: 14px; }
-      .calculator-card { padding: 1rem; }
-      .card-title { font-size: 1.125rem; }
-      .result-total-value { font-size: 1.5rem; }
-      .brand-name { font-size: 1.25rem; }
-      .brand-logo { width: 2.25rem; height: 2.25rem; font-size: 1rem; }
-      .theme-toggle { width: 2.25rem; height: 2.25rem; font-size: 1rem; }
-      .quick-buttons { grid-template-columns: repeat(2, 1fr); }
-      .tab-button { font-size: 0.75rem; padding: 0.5rem 0.75rem; }
-      .input-field, .select-field { padding: 0.75rem 0.875rem; font-size: 0.875rem; }
-      .action-button { padding: 0.75rem 1rem; font-size: 0.875rem; }
+      html {
+        font-size: 14px;
+      }
+      
+      .calculator-card {
+        padding: 1rem;
+      }
+      
+      .card-title {
+        font-size: 1.125rem;
+      }
+      
+      .result-total-value {
+        font-size: 1.5rem;
+      }
+      
+      .brand-name {
+        font-size: 1.25rem;
+      }
+      
+      .brand-logo {
+        width: 2.25rem;
+        height: 2.25rem;
+        font-size: 1rem;
+      }
+      
+      .theme-toggle {
+        width: 2.25rem;
+        height: 2.25rem;
+        font-size: 1rem;
+      }
+      
+      .quick-buttons {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .tab-button {
+        font-size: 0.75rem;
+        padding: 0.5rem 0.75rem;
+      }
+      
+      .input-field, .select-field {
+        padding: 0.75rem 0.875rem;
+        font-size: 0.875rem;
+      }
+      
+      .action-button {
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+      }
     }
     
+    /* Very Small Devices */
     @media (max-width: 320px) {
-      html { font-size: 12px; }
-      main { padding: 0.75rem 0.5rem; }
-      .calculator-grid { gap: 0.75rem; }
-      .calculator-card { padding: 0.75rem; }
-      .card-header { gap: 0.5rem; }
-      .card-icon { width: 2rem; height: 2rem; font-size: 1rem; }
-      .quick-buttons { grid-template-columns: 1fr; }
-      .brand-name { font-size: 1.125rem; }
-      .brand-logo { width: 2rem; height: 2rem; font-size: 0.875rem; }
-      .theme-toggle { width: 2rem; height: 2rem; font-size: 0.875rem; }
+      html {
+        font-size: 12px;
+      }
+      
+      .main-container {
+        padding: 0.75rem 0.5rem;
+      }
+      
+      .calculator-grid {
+        gap: 0.75rem;
+      }
+      
+      .calculator-card {
+        padding: 0.75rem;
+      }
+      
+      .card-header {
+        gap: 0.5rem;
+      }
+      
+      .card-icon {
+        width: 2rem;
+        height: 2rem;
+        font-size: 1rem;
+      }
+      
+      .quick-buttons {
+        grid-template-columns: 1fr;
+      }
+      
+      .brand-name {
+        font-size: 1.125rem;
+      }
+      
+      .brand-logo {
+        width: 2rem;
+        height: 2rem;
+        font-size: 0.875rem;
+      }
+      
+      .theme-toggle {
+        width: 2rem;
+        height: 2rem;
+        font-size: 0.875rem;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Skip Link -->
-  <a href="#main-content" class="skip-link">Langsung ke konten utama</a>
-
-  <!-- Fire Background -->
-  <div class="fire-background" id="fireBackground"></div>
-  
-  <!-- Fire Glow Effects -->
-  <div class="fire-glow" style="top: 20%; left: 10%;"></div>
-  <div class="fire-glow" style="top: 60%; right: 15%; animation-delay: 1s;"></div>
-  <div class="fire-glow" style="bottom: 20%; left: 20%; animation-delay: 2s;"></div>
-
   <!-- Header -->
   <header class="app-header">
     <div class="brand-container">
@@ -1163,16 +850,16 @@
           <div class="brand-name">VELL STORE</div>
         </div>
       </div>
-      <button class="theme-toggle" id="themeToggle" aria-label="Ubah tema antara gelap dan terang">
-        <i class="fas fa-moon" id="themeIcon"></i>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <i class="fas fa-moon" id="theme-icon"></i>
       </button>
     </div>
   </header>
 
   <!-- Main Content -->
-  <main id="main-content">
+  <main class="main-container">
     <!-- Important Notice -->
-    <section class="important-notice">
+    <div class="important-notice">
       <div class="important-notice-content">
         <div class="important-notice-title">
           <i class="fas fa-exclamation-triangle"></i>
@@ -1182,15 +869,15 @@
           Rate Robux dapat berubah sewaktu-waktu sesuai dengan informasi terbaru di saluran VELL STORE. Pastikan selalu menggunakan rate yang terupdate untuk hasil perhitungan yang akurat.
         </p>
       </div>
-      <button class="important-notice-button" id="checkRateBtn">
+      <button class="important-notice-button" onclick="checkRate()">
         <i class="fab fa-whatsapp"></i>
         Cek Rate
       </button>
-    </section>
+    </div>
 
     <div class="calculator-grid">
       <!-- Robux Calculator -->
-      <article class="calculator-card" id="robuxCalculator">
+      <div class="calculator-card" id="robuxCalculator">
         <div class="card-header">
           <div class="card-icon">
             <i class="fas fa-coins"></i>
@@ -1199,26 +886,26 @@
         </div>
         
         <div class="tabs-container">
-          <div class="tabs" role="tablist">
-            <button class="tab-button active" role="tab" aria-selected="true" data-mode="before" id="tab-before">Before Tax</button>
-            <button class="tab-button" role="tab" aria-selected="false" data-mode="after" id="tab-after">After Tax</button>
-            <button class="tab-button" role="tab" aria-selected="false" data-mode="rupiah" id="tab-rupiah">Rp → Robux</button>
+          <div class="tabs">
+            <button class="tab-button active" onclick="setMode('before')" id="tab-before">Before Tax</button>
+            <button class="tab-button" onclick="setMode('after')" id="tab-after">After Tax</button>
+            <button class="tab-button" onclick="setMode('rupiah')" id="tab-rupiah">Rp → Robux</button>
           </div>
         </div>
         
         <div class="input-group">
           <label class="input-label" id="robuxInputLabel">Masukkan jumlah Robux</label>
-          <input type="number" class="input-field" id="robuxInput" placeholder="0" min="0" aria-label="Jumlah Robux">
+          <input type="number" class="input-field" id="robuxInput" placeholder="0" oninput="debounceHitungRobux()" autofocus min="0">
         </div>
         
-        <div id="quickRp" class="quick-buttons" style="display: none;" role="group" aria-label="Pilihan Rupiah Cepat"></div>
+        <div id="quickRp" class="quick-buttons" style="display: none;"></div>
         
         <div class="input-group">
           <label class="input-label">Rate 1 Robux (Rp)</label>
-          <input type="number" class="input-field" id="rateInput" placeholder="0" min="0" aria-label="Rate Robux">
+          <input type="number" class="input-field" id="rateInput" placeholder="0" oninput="debounceHitungRobux()" min="0">
         </div>
         
-        <div class="result-table" id="robuxResultTable" aria-live="polite">
+        <div class="result-table" id="robuxResultTable">
           <div class="result-total">
             <div class="result-total-label">Total</div>
             <div class="result-total-value" id="robuxTotal">Rp 0</div>
@@ -1249,10 +936,15 @@
         </div>
         
         <div class="action-buttons">
-          <button class="action-button secondary" id="resetRobuxBtn"><i class="fas fa-redo"></i> Reset</button>
-          <button class="action-button primary" id="copyRobuxBtn"><i class="fas fa-copy"></i> Salin</button>
-          <button class="action-button buy" id="exportRobuxBtn"><i class="fas fa-download"></i> Ekspor</button>
-          <button class="action-button whatsapp" id="buyRobuxBtn"><i class="fab fa-whatsapp"></i> Beli</button>
+          <button class="action-button secondary" onclick="resetRobux()">
+            <i class="fas fa-redo"></i> Reset
+          </button>
+          <button class="action-button primary" onclick="copyRobuxResult()">
+            <i class="fas fa-copy"></i> Salin
+          </button>
+          <button class="action-button buy" onclick="buyRobux()">
+            <i class="fab fa-whatsapp"></i> Beli
+          </button>
         </div>
         
         <div class="info-box" id="robuxInfo">
@@ -1264,10 +956,10 @@
             Mode Before Tax: Harga sebelum potongan 30% yang diterima pembeli
           </div>
         </div>
-      </article>
+      </div>
 
       <!-- TCC Calculator -->
-      <article class="calculator-card" id="tccCalculator">
+      <div class="calculator-card" id="tccCalculator">
         <div class="card-header">
           <div class="card-icon">
             <i class="fas fa-calculator"></i>
@@ -1277,12 +969,12 @@
         
         <div class="input-group">
           <label class="input-label">Harga USD</label>
-          <input type="number" class="input-field" id="usdInput" step="0.01" placeholder="0.00" min="0" aria-label="Harga USD">
+          <input type="number" class="input-field" id="usdInput" step="0.01" placeholder="0.00" oninput="hitungTCC()" min="0">
         </div>
         
         <div class="input-group">
           <label class="input-label">Rate USD</label>
-          <select class="select-field" id="rateSelect" aria-label="Pilih Rate USD">
+          <select class="select-field" id="rateSelect" onchange="toggleCustomRate(); hitungTCC();">
             <option value="16000">16.000</option>
             <option value="16100">16.100</option>
             <option value="16200">16.200</option>
@@ -1301,13 +993,13 @@
         <div id="customRate" class="custom-input">
           <div class="input-group">
             <label class="input-label">Rate Manual</label>
-            <input type="number" class="input-field" id="customRateInput" placeholder="Masukkan rate manual" min="0" aria-label="Rate Manual USD">
+            <input type="number" class="input-field" id="customRateInput" placeholder="Masukkan rate manual" oninput="hitungTCC()" min="0">
           </div>
         </div>
         
         <div class="input-group">
           <label class="input-label">Profit</label>
-          <select class="select-field" id="profitSelect" aria-label="Pilih Profit">
+          <select class="select-field" id="profitSelect" onchange="toggleCustomProfit(); hitungTCC();">
             <option value="0">Rp 0</option>
             <option value="1000">Rp 1.000</option>
             <option value="2000">Rp 2.000</option>
@@ -1326,11 +1018,11 @@
         <div id="customProfit" class="custom-input">
           <div class="input-group">
             <label class="input-label">Profit Manual</label>
-            <input type="number" class="input-field" id="customProfitInput" placeholder="Masukkan profit manual" min="0" aria-label="Profit Manual">
+            <input type="number" class="input-field" id="customProfitInput" placeholder="Masukkan profit manual" oninput="hitungTCC()" min="0">
           </div>
         </div>
         
-        <div class="result-table" id="tccResultTable" aria-live="polite">
+        <div class="result-table" id="tccResultTable">
           <div class="result-total">
             <div class="result-total-label">Total TCC</div>
             <div class="result-total-value" id="tccTotal">Rp 0</div>
@@ -1361,10 +1053,15 @@
         </div>
         
         <div class="action-buttons">
-          <button class="action-button secondary" id="resetTCCBtn"><i class="fas fa-redo"></i> Reset</button>
-          <button class="action-button primary" id="copyTCCBtn"><i class="fas fa-copy"></i> Salin</button>
-          <button class="action-button buy" id="exportTCCBtn"><i class="fas fa-download"></i> Ekspor</button>
-          <button class="action-button whatsapp" id="buyTCCBtn"><i class="fab fa-whatsapp"></i> Beli</button>
+          <button class="action-button secondary" onclick="resetTCC()">
+            <i class="fas fa-redo"></i> Reset
+          </button>
+          <button class="action-button primary" onclick="copyTCCResult()">
+            <i class="fas fa-copy"></i> Salin
+          </button>
+          <button class="action-button buy" onclick="buyTCC()">
+            <i class="fab fa-whatsapp"></i> Beli
+          </button>
         </div>
         
         <div class="info-box">
@@ -1376,575 +1073,305 @@
             TCC = (Harga USD × Rate) + Profit. Masukkan nilai yang sesuai untuk menghitung total biaya transaksi.
           </div>
         </div>
-      </article>
+      </div>
     </div>
-    
-    <!-- History Section -->
-    <section class="history-container" id="historyContainer">
-      <h3 class="history-title">Riwayat Perhitungan</h3>
-      <ul class="history-list" id="historyList">
-        <li class="history-item">Belum ada riwayat perhitungan.</li>
-      </ul>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq-section" id="faq">
-      <h2 class="section-title">Pertanyaan yang Sering Diajukan (FAQ)</h2>
-      <div class="faq-item">
-        <h3>1. Apa itu mode "Before Tax"?</h3>
-        <p>Mode "Before Tax" menghitung harga berdasarkan jumlah Robux yang Anda input sebelum dikenakan potongan 30% oleh Roblox. Contoh: jika Anda menginput 1000 Robux, pembeli akan menerima 700 Robux.</p>
-      </div>
-      <div class="faq-item">
-        <h3>2. Bagaimana cara menggunakan mode "After Tax"?</h3>
-        <p>Mode "After Tax" digunakan jika Anda ingin mengetahui berapa Robux yang harus dikirim agar pembeli menerima jumlah yang diinginkan. Contoh: jika pembeli ingin menerima 700 Robux, Anda perlu mengirim 1000 Robux.</p>
-      </div>
-      <div class="faq-item">
-        <h3>3. Di mana saya bisa mendapatkan rate Robux terbaru?</h3>
-        <p>Anda bisa mendapatkan rate Robux terbaru dengan menekan tombol "Cek Rate" di bagian Informasi Penting, yang akan mengarahkan Anda ke saluran WhatsApp resmi VELL STORE.</p>
-      </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="contact-section" id="contact">
-      <h2 class="section-title">Hubungi Kami</h2>
-      <form class="contact-form" id="contactForm" novalidate>
-        <div class="form-group">
-          <label for="contactName">Nama</label>
-          <input type="text" id="contactName" name="name" required>
-        </div>
-        <div class="form-group">
-          <label for="contactEmail">Email</label>
-          <input type="email" id="contactEmail" name="email" required>
-        </div>
-        <div class="form-group">
-          <label for="contactMessage">Pesan</label>
-          <textarea id="contactMessage" name="message" rows="5" required></textarea>
-        </div>
-        <button type="submit"><i class="fas fa-paper-plane"></i> Kirim Pesan</button>
-      </form>
-    </section>
   </main>
 
   <!-- Footer -->
-  <footer>
+  <footer class="footer">
     <p>© 2024 VELL STORE - Professional Calculator Tools</p>
   </footer>
 
-  <!-- Toast Notification -->
-  <div class="toast" id="toast" role="alert" aria-live="assertive">
-    <i class="fas fa-check-circle"></i>
-    <span id="toastMessage">Berhasil!</span>
-  </div>
-
-  <!-- Loading Indicator -->
-  <div class="loading-indicator" id="loadingIndicator">
-    <div class="spinner"></div>
-    <div class="loading-text">Memproses...</div>
-  </div>
-
   <script>
-    /**
-     * VELL STORE App - Enhanced Calculator
-     * An IIFE (Immediately Invoked Function Expression) to encapsulate the application logic.
-     */
-    const VellStoreApp = (function() {
-      'use strict';
+    let mode = "before";
+    let debounceTimer;
 
-      // Private Variables
-      let mode = "before";
-      let debounceTimer;
-      const HISTORY_KEY = 'vellStore_history';
-      const MAX_HISTORY_ITEMS = 5;
+    function formatRupiah(angka) {
+      return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0
+      }).format(angka);
+    }
 
-      // DOM Element Cache
-      const elements = {};
+    function setMode(m) {
+      mode = m;
+      document.querySelectorAll(".tab-button").forEach(b => b.classList.remove("active"));
+      document.getElementById("tab-" + m).classList.add("active");
 
-      /**
-       * Cache DOM elements for better performance.
-       */
-      function cacheElements() {
-        elements.body = document.body;
-        elements.themeToggle = document.getElementById('themeToggle');
-        elements.themeIcon = document.getElementById('themeIcon');
-        elements.robuxInput = document.getElementById('robuxInput');
-        elements.rateInput = document.getElementById('rateInput');
-        elements.toast = document.getElementById('toast');
-        elements.toastMessage = document.getElementById('toastMessage');
-        elements.loadingIndicator = document.getElementById('loadingIndicator');
-        elements.historyList = document.getElementById('historyList');
-        elements.contactForm = document.getElementById('contactForm');
-        
-        // Robux Calculator
-        elements.robuxResultTable = document.getElementById('robuxResultTable');
-        elements.robuxTotal = document.getElementById('robuxTotal');
-        elements.robuxFormula = document.getElementById('robuxFormula');
-        elements.quickRp = document.getElementById('quickRp');
-        elements.robuxInputLabel = document.getElementById('robuxInputLabel');
-        elements.robuxInfoContent = document.getElementById('robuxInfoContent');
-        
-        // TCC Calculator
-        elements.usdInput = document.getElementById('usdInput');
-        elements.rateSelect = document.getElementById('rateSelect');
-        elements.profitSelect = document.getElementById('profitSelect');
-        elements.customRate = document.getElementById('customRate');
-        elements.customProfit = document.getElementById('customProfit');
-        elements.customRateInput = document.getElementById('customRateInput');
-        elements.customProfitInput = document.getElementById('customProfitInput');
-        elements.tccResultTable = document.getElementById('tccResultTable');
-        elements.tccTotal = document.getElementById('tccTotal');
-        elements.tccFormula = document.getElementById('tccFormula');
-      }
+      let input = document.getElementById("robuxInput");
+      let label = document.getElementById("robuxInputLabel");
+      let infoContent = document.getElementById("robuxInfoContent");
+      let quickDiv = document.getElementById("quickRp");
+      quickDiv.style.display = (m === "rupiah") ? "grid" : "none";
 
-      /**
-       * Initialize the application.
-       */
-      function init() {
-        cacheElements();
-        setupEventListeners();
-        createFireParticles();
-        loadHistory();
-        checkThemePreference();
-      }
-
-      /**
-       * Setup all event listeners.
-       */
-      function setupEventListeners() {
-        // Theme Toggle
-        elements.themeToggle.addEventListener('click', toggleTheme);
-
-        // Tab buttons
-        document.querySelectorAll('.tab-button').forEach(button => {
-          button.addEventListener('click', () => setMode(button.dataset.mode));
-        });
-
-        // Robux Calculator
-        elements.robuxInput.addEventListener('input', debounce(hitungRobux, 300));
-        elements.rateInput.addEventListener('input', debounce(hitungRobux, 300));
-        document.getElementById('resetRobuxBtn').addEventListener('click', resetRobux);
-        document.getElementById('copyRobuxBtn').addEventListener('click', () => copyResult('robux'));
-        document.getElementById('exportRobuxBtn').addEventListener('click', () => exportResult('robux'));
-        document.getElementById('buyRobuxBtn').addEventListener('click', () => buyNow('robux'));
-
-        // TCC Calculator
-        elements.usdInput.addEventListener('input', debounce(hitungTCC, 300));
-        elements.rateSelect.addEventListener('change', () => { toggleCustomRate(); hitungTCC(); });
-        elements.profitSelect.addEventListener('change', () => { toggleCustomProfit(); hitungTCC(); });
-        elements.customRateInput.addEventListener('input', debounce(hitungTCC, 300));
-        elements.customProfitInput.addEventListener('input', debounce(hitungTCC, 300));
-        document.getElementById('resetTCCBtn').addEventListener('click', resetTCC);
-        document.getElementById('copyTCCBtn').addEventListener('click', () => copyResult('tcc'));
-        document.getElementById('exportTCCBtn').addEventListener('click', () => exportResult('tcc'));
-        document.getElementById('buyTCCBtn').addEventListener('click', () => buyNow('tcc'));
-
-        // Important Notice Button
-        document.getElementById('checkRateBtn').addEventListener('click', checkRate);
-
-        // Contact Form
-        elements.contactForm.addEventListener('submit', handleContactForm);
-      }
-
-      // ==========================================================================
-      // UTILITY FUNCTIONS
-      // ==========================================================================
-
-      /**
-       * Debounce function to limit the rate at which a function can fire.
-       */
-      function debounce(func, delay) {
-        return function(...args) {
-          clearTimeout(debounceTimer);
-          debounceTimer = setTimeout(() => func.apply(this, args), delay);
-        };
-      }
-
-      /**
-       * Format number to Rupiah currency.
-       */
-      function formatRupiah(angka) {
-        return new Intl.NumberFormat('id-ID', {
-          style: 'currency',
-          currency: 'IDR',
-          minimumFractionDigits: 0
-        }).format(angka);
-      }
-      
-      /**
-       * Sanitize string to prevent XSS.
-       */
-      function sanitizeInput(str) {
-        const div = document.createElement('div');
-        div.textContent = str;
-        return div.innerHTML;
-      }
-
-      /**
-       * Show a toast notification.
-       */
-      function showToast(message, duration = 2000) {
-        elements.toastMessage.textContent = message;
-        elements.toast.classList.add('show');
-        setTimeout(() => {
-          elements.toast.classList.remove('show');
-        }, duration);
-      }
-
-      /**
-       * Show/hide loading indicator.
-       */
-      function setLoading(isLoading) {
-        if(isLoading) {
-          elements.loadingIndicator.classList.add('active');
-        } else {
-          elements.loadingIndicator.classList.remove('active');
-        }
-      }
-
-      /**
-       * Save calculation to localStorage.
-       */
-      function saveToHistory(calculation) {
-        let history = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
-        history.unshift(calculation); // Add to the beginning
-        if (history.length > MAX_HISTORY_ITEMS) {
-          history = history.slice(0, MAX_HISTORY_ITEMS);
-        }
-        localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
-        loadHistory();
-      }
-
-      /**
-       * Load and display history from localStorage.
-       */
-      function loadHistory() {
-        const history = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
-        if (history.length === 0) {
-          elements.historyList.innerHTML = '<li class="history-item">Belum ada riwayat perhitungan.</li>';
-          return;
-        }
-        
-        elements.historyList.innerHTML = history.map(item => `
-          <li class="history-item">
-            <span>${sanitizeInput(item.text)}</span>
-            <span class="timestamp">${new Date(item.timestamp).toLocaleString('id-ID')}</span>
-          </li>
-        `).join('');
-      }
-      
-      // ==========================================================================
-      // THEME & UI
-      // ==========================================================================
-
-      /**
-       * Toggle between light and dark theme.
-       */
-      function toggleTheme() {
-        elements.body.classList.toggle('light');
-        const isLight = elements.body.classList.contains('light');
-        elements.themeIcon.className = isLight ? 'fas fa-sun' : 'fas fa-moon';
-        localStorage.setItem('vellStore_theme', isLight ? 'light' : 'dark');
-      }
-
-      /**
-       * Check and apply saved theme preference.
-       */
-      function checkThemePreference() {
-        const savedTheme = localStorage.getItem('vellStore_theme');
-        if (savedTheme === 'light') {
-          elements.body.classList.add('light');
-          elements.themeIcon.className = 'fas fa-sun';
-        }
-      }
-      
-      /**
-       * Create animated fire particles in the background.
-       */
-      function createFireParticles() {
-        const fireBackground = document.getElementById('fireBackground');
-        const particleCount = window.innerWidth > 768 ? 50 : 20; // Less particles on mobile
-        
-        for (let i = 0; i < particleCount; i++) {
-          const particle = document.createElement('div');
-          particle.className = 'fire-particle';
-          particle.style.left = Math.random() * 100 + '%';
-          particle.style.animationDelay = Math.random() * 8 + 's';
-          particle.style.animationDuration = (8 + Math.random() * 4) + 's';
-          fireBackground.appendChild(particle);
-        }
-      }
-
-      // ==========================================================================
-      // ROBUX CALCULATOR LOGIC
-      // ==========================================================================
-
-      /**
-       * Set the calculation mode for Robux calculator.
-       */
-      function setMode(m) {
-        mode = m;
-        document.querySelectorAll(".tab-button").forEach(b => {
-          b.classList.remove("active");
-          b.setAttribute('aria-selected', 'false');
-        });
-        document.querySelector(`[data-mode="${m}"]`).classList.add("active");
-        document.querySelector(`[data-mode="${m}"]`).setAttribute('aria-selected', 'true');
-
-        const input = elements.robuxInput;
-        const label = elements.robuxInputLabel;
-        const infoContent = elements.robuxInfoContent;
-        const quickDiv = elements.quickRp;
-        
-        quickDiv.style.display = (m === "rupiah") ? "grid" : "none";
-
-        if (m === "rupiah") {
-          label.innerText = "Masukkan jumlah Rupiah";
-          input.placeholder = "0";
-          infoContent.innerHTML = "Mode Rp → Robux: Konversi Rupiah ke Robux dengan memperhitungan potongan 30%";
-          setupQuickButtons();
-        } else if (m === "before") {
-          label.innerText = "Masukkan jumlah Robux";
-          input.placeholder = "0";
-          infoContent.innerHTML = "Mode Before Tax: Harga sebelum potongan 30% yang diterima pembeli. Contoh: 1000 Robux = 700 Robux diterima";
-        } else if (m === "after") {
-          label.innerText = "Masukkan jumlah Robux (buyer terima)";
-          input.placeholder = "0";
-          infoContent.innerHTML = "Mode After Tax: Seller harus mengirim lebih banyak Robux agar buyer menerima jumlah yang diinginkan. Contoh: Buyer mau 700 Robux, seller kirim 1000 Robux";
-        }
-        hitungRobux();
-      }
-
-      /**
-       * Setup quick amount buttons for Rupiah mode.
-       */
-      function setupQuickButtons() {
-        elements.quickRp.innerHTML = "";
+      if (m === "rupiah") {
+        label.innerText = "Masukkan jumlah Rupiah";
+        input.placeholder = "0";
+        infoContent.innerHTML = "Mode Rp → Robux: Konversi Rupiah ke Robux dengan memperhitungan potongan 30%";
+        quickDiv.innerHTML = "";
         for (let i = 1; i <= 10; i++) {
           let val = i * 10000;
           let btn = document.createElement("button");
           btn.className = "quick-button";
-          btn.innerHTML = `<span>${formatRupiah(val)}</span>`;
-          btn.onclick = () => { elements.robuxInput.value = val; hitungRobux(); };
-          elements.quickRp.appendChild(btn);
+          btn.innerText = formatRupiah(val);
+          btn.onclick = () => { setRp(val); };
+          quickDiv.appendChild(btn);
         }
+      } else if (m === "before") {
+        label.innerText = "Masukkan jumlah Robux";
+        input.placeholder = "0";
+        infoContent.innerHTML = "Mode Before Tax: Harga sebelum potongan 30% yang diterima pembeli. Contoh: 1000 Robux = 700 Robux diterima";
+      } else if (m === "after") {
+        label.innerText = "Masukkan jumlah Robux (buyer terima)";
+        input.placeholder = "0";
+        infoContent.innerHTML = "Mode After Tax: Seller harus mengirim lebih banyak Robux agar buyer menerima jumlah yang diinginkan. Contoh: Buyer mau 700 Robux, seller kirim 1000 Robux";
+      }
+      debounceHitungRobux();
+    }
+
+    function debounceHitungRobux() {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(hitungRobux, 300);
+    }
+
+    function hitungRobux() {
+      let inputVal = parseFloat(document.getElementById("robuxInput").value) || 0;
+      let rate = parseFloat(document.getElementById("rateInput").value) || 0;
+      let resultTable = document.getElementById("robuxResultTable");
+      
+      if (inputVal <= 0 || rate <= 0) {
+        resultTable.classList.remove("active");
+        return;
       }
       
-      /**
-       * Perform Robux calculation based on the current mode.
-       */
-      function hitungRobux() {
-        const inputVal = parseFloat(elements.robuxInput.value) || 0;
-        const rate = parseFloat(elements.rateInput.value) || 0;
+      resultTable.classList.add("active");
+      
+      if (mode === "before") {
+        let received = Math.floor(inputVal * 0.7);
+        let price = inputVal * rate;
         
-        if (inputVal <= 0 || rate <= 0) {
-          elements.robuxResultTable.classList.remove("active");
-          return;
-        }
-        
-        elements.robuxResultTable.classList.add("active");
-        let calculationText = '';
-        
-        if (mode === "before") {
-          const received = Math.floor(inputVal * 0.7);
-          const price = inputVal * rate;
-          updateRobuxUI(inputVal, rate, received, price, inputVal, received);
-          calculationText = `${inputVal.toLocaleString('id-ID')} Robux (${formatRupiah(price)})`;
-          
-        } else if (mode === "after") {
-          const seller = Math.ceil(inputVal / 0.7);
-          const price = seller * rate;
-          updateRobuxUI(seller, rate, inputVal, price, inputVal, seller);
-          calculationText = `${inputVal.toLocaleString('id-ID')} Robux diterima (${formatRupiah(price)})`;
-          
-        } else if (mode === "rupiah") {
-          const rb = Math.floor((inputVal / rate) * 0.7);
-          const seller = Math.ceil(rb / 0.7);
-          updateRobuxUI(seller, rate, rb, inputVal, rb, seller);
-          calculationText = `${formatRupiah(inputVal)} -> ${rb.toLocaleString('id-ID')} Robux`;
-        }
-        
-        saveToHistory({ text: calculationText, timestamp: new Date().toISOString() });
-      }
-
-      /**
-       * Update the UI for the Robux calculator results.
-       */
-      function updateRobuxUI(val1, rate, val3, total, label1Val, label4Val) {
-        elements.robuxTotal.innerText = formatRupiah(total);
-        document.getElementById("robuxLabel1").innerText = mode === "rupiah" ? "Jumlah Rupiah" : (mode === "before" ? "Jumlah Robux" : "Robux Diterima");
-        document.getElementById("robuxValue1").innerText = mode === "rupiah" ? formatRupiah(val1) : val1.toLocaleString('id-ID');
+        document.getElementById("robuxTotal").innerText = formatRupiah(price);
+        document.getElementById("robuxLabel1").innerText = "Jumlah Robux";
+        document.getElementById("robuxValue1").innerText = inputVal.toLocaleString('id-ID');
         document.getElementById("robuxLabel2").innerText = "Rate";
         document.getElementById("robuxValue2").innerText = rate.toLocaleString('id-ID');
-        document.getElementById("robuxLabel3").innerText = mode === "rupiah" ? "Robux Diterima" : (mode === "before" ? "Robux Diterima" : "Robux Dikirim");
-        document.getElementById("robuxValue3").innerText = `${val3.toLocaleString('id-ID')}${mode === 'before' ? ' (-30%)' : ''}`;
-        document.getElementById("robuxLabel4").innerText = mode === "rupiah" ? "Robux Dikirim" : "Total Harga";
-        document.getElementById("robuxValue4").innerText = mode === "rupiah" ? label4Val.toLocaleString('id-ID') : formatRupiah(total);
-        elements.robuxFormula.innerText = `${mode === 'rupiah' ? formatRupiah(val1) : label1Val.toLocaleString('id-ID')} × ${rate.toLocaleString('id-ID')} = ${mode === 'rupiah' ? val3.toLocaleString('id-ID') : formatRupiah(total)} (Diterima: ${label1Val.toLocaleString('id-ID')})`;
-      }
-
-      /**
-       * Reset the Robux calculator.
-       */
-      function resetRobux() {
-        elements.robuxInput.value = "";
-        elements.rateInput.value = "";
-        elements.robuxResultTable.classList.remove("active");
-      }
-
-      // ==========================================================================
-      // TCC CALCULATOR LOGIC
-      // ==========================================================================
-
-      /**
-       * Toggle visibility of custom rate input.
-       */
-      function toggleCustomRate() {
-        const isCustom = elements.rateSelect.value === 'custom';
-        elements.customRate.classList.toggle("active", isCustom);
-        if (isCustom) {
-          elements.customRateInput.focus();
-        }
-      }
-
-      /**
-       * Toggle visibility of custom profit input.
-       */
-      function toggleCustomProfit() {
-        const isCustom = elements.profitSelect.value === 'custom';
-        elements.customProfit.classList.toggle("active", isCustom);
-        if (isCustom) {
-          elements.customProfitInput.focus();
-        }
-      }
-
-      /**
-       * Perform TCC calculation.
-       */
-      function hitungTCC() {
-        const usd = parseFloat(elements.usdInput.value) || 0;
-        const rate = elements.rateSelect.value === 'custom' ? parseFloat(elements.customRateInput.value) || 0 : parseInt(elements.rateSelect.value);
-        const profit = elements.profitSelect.value === 'custom' ? parseFloat(elements.customProfitInput.value) || 0 : parseInt(elements.profitSelect.value);
+        document.getElementById("robuxLabel3").innerText = "Robux Diterima";
+        document.getElementById("robuxValue3").innerText = received.toLocaleString('id-ID') + " (-30%)";
+        document.getElementById("robuxLabel4").innerText = "Total Harga";
+        document.getElementById("robuxValue4").innerText = formatRupiah(price);
+        document.getElementById("robuxFormula").innerText = 
+          `${inputVal} × ${rate.toLocaleString('id-ID')} = ${formatRupiah(price)} (Diterima: ${received.toLocaleString('id-ID')})`;
+          
+      } else if (mode === "after") {
+        let seller = Math.ceil(inputVal / 0.7);
+        let price = seller * rate;
         
-        if (usd <= 0 || rate <= 0) {
-          elements.tccResultTable.classList.remove("active");
-          return;
-        }
+        document.getElementById("robuxTotal").innerText = formatRupiah(price);
+        document.getElementById("robuxLabel1").innerText = "Robux Diterima";
+        document.getElementById("robuxValue1").innerText = inputVal.toLocaleString('id-ID');
+        document.getElementById("robuxLabel2").innerText = "Rate";
+        document.getElementById("robuxValue2").innerText = rate.toLocaleString('id-ID');
+        document.getElementById("robuxLabel3").innerText = "Robux Dikirim";
+        document.getElementById("robuxValue3").innerText = seller.toLocaleString('id-ID');
+        document.getElementById("robuxLabel4").innerText = "Total Harga";
+        document.getElementById("robuxValue4").innerText = formatRupiah(price);
+        document.getElementById("robuxFormula").innerText = 
+          `${seller.toLocaleString('id-ID')} × ${rate.toLocaleString('id-ID')} = ${formatRupiah(price)} (Diterima: ${inputVal.toLocaleString('id-ID')})`;
+          
+      } else if (mode === "rupiah") {
+        let rb = Math.floor((inputVal / rate) * 0.7);
+        let seller = Math.ceil(rb / 0.7);
         
-        elements.tccResultTable.classList.add("active");
-        
-        const usdToIdr = usd * rate;
-        const total = Math.round(usdToIdr + profit);
-        
-        elements.tccTotal.innerText = formatRupiah(total);
-        document.getElementById("tccValue1").innerText = `$${usd.toFixed(2)}`;
-        document.getElementById("tccValue2").innerText = rate.toLocaleString('id-ID');
-        document.getElementById("tccValue3").innerText = formatRupiah(profit);
-        document.getElementById("tccValue4").innerText = formatRupiah(usdToIdr);
-        elements.tccFormula.innerText = `($${usd.toFixed(2)} × ${rate.toLocaleString('id-ID')}) + ${formatRupiah(profit)} = ${formatRupiah(total)}`;
-        
-        const calculationText = `TCC $${usd.toFixed(2)} (${formatRupiah(total)})`;
-        saveToHistory({ text: calculationText, timestamp: new Date().toISOString() });
+        document.getElementById("robuxTotal").innerText = formatRupiah(inputVal);
+        document.getElementById("robuxLabel1").innerText = "Jumlah Rupiah";
+        document.getElementById("robuxValue1").innerText = formatRupiah(inputVal);
+        document.getElementById("robuxLabel2").innerText = "Rate";
+        document.getElementById("robuxValue2").innerText = rate.toLocaleString('id-ID');
+        document.getElementById("robuxLabel3").innerText = "Robux Diterima";
+        document.getElementById("robuxValue3").innerText = rb.toLocaleString('id-ID');
+        document.getElementById("robuxLabel4").innerText = "Robux Dikirim";
+        document.getElementById("robuxValue4").innerText = seller.toLocaleString('id-ID');
+        document.getElementById("robuxFormula").innerText = 
+          `${formatRupiah(inputVal)} ÷ ${rate.toLocaleString('id-ID')} = ${rb.toLocaleString('id-ID')} Robux (Dikirim: ${seller.toLocaleString('id-ID')})`;
       }
+    }
 
-      /**
-       * Reset the TCC calculator.
-       */
-      function resetTCC() {
-        elements.usdInput.value = "";
-        elements.rateSelect.value = "16500";
-        elements.profitSelect.value = "0";
-        elements.customRateInput.value = "";
-        elements.customProfitInput.value = "";
-        elements.customRate.classList.remove("active");
-        elements.customProfit.classList.remove("active");
-        elements.tccResultTable.classList.remove("active");
+    function setRp(val) {
+      document.getElementById("robuxInput").value = val;
+      hitungRobux();
+    }
+
+    // TCC Functions
+    function toggleCustomRate() {
+      const rateSelect = document.getElementById('rateSelect');
+      const customRate = document.getElementById('customRate');
+      
+      if (rateSelect.value === 'custom') {
+        customRate.classList.add('active');
+        document.getElementById('customRateInput').focus();
+      } else {
+        customRate.classList.remove('active');
       }
+    }
 
-      // ==========================================================================
-      // SHARED ACTIONS (COPY, EXPORT, BUY)
-      // ==========================================================================
-
-      /**
-       * Copy calculation result to clipboard.
-       */
-      function copyResult(type) {
-        const total = document.getElementById(`${type}Total`).innerText;
-        const formula = document.getElementById(`${type}Formula`).innerText;
-        const text = `${total}\n${formula}`;
-        
-        navigator.clipboard.writeText(text).then(() => {
-          showToast('Hasil berhasil disalin!');
-        }).catch(err => {
-          console.error('Gagal menyalin: ', err);
-          showToast('Gagal menyalin.');
-        });
+    function toggleCustomProfit() {
+      const profitSelect = document.getElementById('profitSelect');
+      const customProfit = document.getElementById('customProfit');
+      
+      if (profitSelect.value === 'custom') {
+        customProfit.classList.add('active');
+        document.getElementById('customProfitInput').focus();
+      } else {
+        customProfit.classList.remove('active');
       }
+    }
 
-      /**
-       * Export calculation result as a text file.
-       */
-      function exportResult(type) {
-        const total = document.getElementById(`${type}Total`).innerText;
-        const formula = document.getElementById(`${type}Formula`).innerText;
-        const text = `Hasil Perhitungan VELL STORE\n\nTipe: ${type.toUpperCase()}\nTanggal: ${new Date().toLocaleString('id-ID')}\n\nTotal: ${total}\nDetail: ${formula}`;
-        
-        const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `vell-store-${type}-calculation-${Date.now()}.txt`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        
-        showToast('File berhasil diunduh!');
-      }
-
-      /**
-       * Open WhatsApp with pre-filled message for purchase.
-       */
-      function buyNow(type) {
-        const total = document.getElementById(`${type}Total`).innerText;
-        const formula = document.getElementById(`${type}Formula`).innerText;
-        const phoneNumber = "6283821170532"; // Replace with your actual number
-        const text = `*Pesan Pembelian ${type.toUpperCase()}*\n\n${total}\n${formula}\n\nSaya ingin membeli dengan detail di atas.`;
-        
-        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
-        window.open(whatsappUrl, '_blank');
-      }
-
-      /**
-       * Open the WhatsApp channel to check rates.
-       */
-      function checkRate() {
-        const channelUrl = "https://whatsapp.com/channel/0029Vb61CohGk1FyQoysmC0m"; // Replace with your actual channel
-        window.open(channelUrl, '_blank');
+    function hitungTCC() {
+      let usd = parseFloat(document.getElementById("usdInput").value) || 0;
+      let rateSelect = document.getElementById("rateSelect");
+      let profitSelect = document.getElementById("profitSelect");
+      let resultTable = document.getElementById("tccResultTable");
+      
+      // Get rate value
+      let rate;
+      if (rateSelect.value === 'custom') {
+        rate = parseFloat(document.getElementById("customRateInput").value) || 0;
+      } else {
+        rate = parseInt(rateSelect.value);
       }
       
-      /**
-       * Handle contact form submission.
-       */
-      function handleContactForm(event) {
-        event.preventDefault();
-        setLoading(true);
-        // Simulate sending the form
-        setTimeout(() => {
-          setLoading(false);
-          showToast('Pesan Anda telah terkirim! (Ini adalah simulasi)');
-          elements.contactForm.reset();
-        }, 1500);
+      // Get profit value
+      let profit;
+      if (profitSelect.value === 'custom') {
+        profit = parseFloat(document.getElementById("customProfitInput").value) || 0;
+      } else {
+        profit = parseInt(profitSelect.value);
       }
+      
+      if (usd <= 0 || rate <= 0) {
+        resultTable.classList.remove("active");
+        return;
+      }
+      
+      resultTable.classList.add("active");
+      
+      // Calculate values
+      let usdToIdr = usd * rate;
+      let total = Math.round(usdToIdr + profit);
+      
+      // Update detailed result
+      document.getElementById("tccTotal").innerText = formatRupiah(total);
+      document.getElementById("tccValue1").innerText = `$${usd.toFixed(2)}`;
+      document.getElementById("tccValue2").innerText = rate.toLocaleString('id-ID');
+      document.getElementById("tccValue3").innerText = formatRupiah(profit);
+      document.getElementById("tccValue4").innerText = formatRupiah(usdToIdr);
+      document.getElementById("tccFormula").innerText = 
+        `($${usd.toFixed(2)} × ${rate.toLocaleString('id-ID')}) + ${formatRupiah(profit)} = ${formatRupiah(total)}`;
+    }
 
-      // Public API
-      return {
-        init: init
-      };
+    function resetRobux() {
+      document.getElementById("robuxInput").value = "";
+      document.getElementById("rateInput").value = "";
+      document.getElementById("robuxResultTable").classList.remove("active");
+    }
 
-    })();
+    function resetTCC() {
+      document.getElementById("usdInput").value = "";
+      document.getElementById("rateSelect").value = "16500";
+      document.getElementById("profitSelect").value = "0";
+      document.getElementById("customRateInput").value = "";
+      document.getElementById("customProfitInput").value = "";
+      document.getElementById("customRate").classList.remove("active");
+      document.getElementById("customProfit").classList.remove("active");
+      document.getElementById("tccResultTable").classList.remove("active");
+    }
 
-    // Initialize the app when the DOM is fully loaded
-    document.addEventListener('DOMContentLoaded', VellStoreApp.init);
+    function copyRobuxResult() {
+      const total = document.getElementById("robuxTotal").innerText;
+      const formula = document.getElementById("robuxFormula").innerText;
+      const text = `${total}\n${formula}`;
+      
+      navigator.clipboard.writeText(text).then(() => {
+        showCopyFeedback();
+      }).catch(err => {
+        console.error('Gagal menyalin: ', err);
+      });
+    }
 
+    function copyTCCResult() {
+      const total = document.getElementById("tccTotal").innerText;
+      const formula = document.getElementById("tccFormula").innerText;
+      const text = `${total}\n${formula}`;
+      
+      navigator.clipboard.writeText(text).then(() => {
+        showCopyFeedback();
+      }).catch(err => {
+        console.error('Gagal menyalin: ', err);
+      });
+    }
+
+    function buyRobux() {
+      const total = document.getElementById("robuxTotal").innerText;
+      const formula = document.getElementById("robuxFormula").innerText;
+      const phoneNumber = "6283821170532";
+      const text = `*Pesan Pembelian Robux*\n\n${total}\n${formula}\n\nSaya ingin membeli Robux dengan detail di atas.`;
+      
+      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
+      window.open(whatsappUrl, '_blank');
+    }
+
+    function buyTCC() {
+      const total = document.getElementById("tccTotal").innerText;
+      const formula = document.getElementById("tccFormula").innerText;
+      const phoneNumber = "6283821170532";
+      const text = `*Pesan Pembelian TCC*\n\n${total}\n${formula}\n\nSaya ingin membeli TCC dengan detail di atas.`;
+      
+      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
+      window.open(whatsappUrl, '_blank');
+    }
+
+    function checkRate() {
+      const channelUrl = "https://whatsapp.com/channel/0029Vb61CohGk1FyQoysmC0m";
+      window.open(channelUrl, '_blank');
+    }
+
+    function showCopyFeedback() {
+      const buttons = document.querySelectorAll('.action-button.primary');
+      buttons.forEach(btn => {
+        const originalHTML = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-check"></i> Tersalin!';
+        btn.style.background = 'var(--success)';
+        
+        setTimeout(() => {
+          btn.innerHTML = originalHTML;
+          btn.style.background = '';
+        }, 2000);
+      });
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle("light");
+      const icon = document.getElementById("theme-icon");
+      
+      if (document.body.classList.contains("light")) {
+        icon.className = "fas fa-sun";
+      } else {
+        icon.className = "fas fa-moon";
+      }
+    }
+
+    // Inisialisasi
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set default values
+      document.getElementById("rateSelect").value = "16500";
+      document.getElementById("profitSelect").value = "0";
+      
+      // Focus on first input
+      setTimeout(() => {
+        document.getElementById("robuxInput").focus();
+      }, 300);
+    });
   </script>
 </body>
 </html>
