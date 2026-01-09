@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VELL STORE - Kalkulator Robux & TCC</title>
+  <title>VELL STORE - Kalkulator Robux</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
@@ -95,7 +95,7 @@
     }
     
     .brand-container {
-      max-width: 1200px;
+      max-width: 800px; /* Reduced max width for single card layout */
       margin: 0 auto;
       padding: 0 1rem;
       display: flex;
@@ -164,7 +164,7 @@
     
     /* Main Container */
     .main-container {
-      max-width: 1200px;
+      max-width: 800px; /* Centered layout */
       margin: 0 auto;
       padding: 2.5rem 1rem;
       width: 100%;
@@ -239,11 +239,9 @@
       box-shadow: 0 0.25rem 0.5rem -0.125rem rgba(245, 158, 11, 0.3);
     }
     
-    /* Calculator Grid */
-    .calculator-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 500px), 1fr));
-      gap: 1.875rem;
+    /* Calculator Grid (Modified for single item) */
+    .calculator-wrapper {
+      width: 100%;
       margin-top: 1.875rem;
     }
     
@@ -369,29 +367,6 @@
       box-shadow: 0 0 0 0.1875rem rgba(79, 70, 229, 0.1);
     }
     
-    .select-field {
-      width: 100%;
-      padding: 0.875rem 1rem;
-      background: var(--bg-input);
-      border: 1px solid var(--border-color);
-      border-radius: 0.625rem;
-      color: var(--text-primary);
-      font-size: 1rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23a0aec0' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 1rem center;
-      padding-right: 2.5rem;
-    }
-    
-    .select-field:focus {
-      outline: none;
-      border-color: var(--accent-primary);
-      box-shadow: 0 0 0 0.1875rem rgba(79, 70, 229, 0.1);
-    }
-    
     /* Quick Buttons */
     .quick-buttons {
       display: grid;
@@ -427,7 +402,7 @@
     .action-buttons {
       display: flex;
       gap: 0.75rem;
-      margin-top: 1.5625;
+      margin-top: 1.5625rem;
     }
     
     .action-button {
@@ -643,11 +618,6 @@
     
     /* Responsive */
     @media (max-width: 768px) {
-      .calculator-grid {
-        grid-template-columns: 1fr;
-        gap: 1.25rem;
-      }
-      
       .result-details {
         grid-template-columns: 1fr;
         gap: 0.75rem;
@@ -779,7 +749,7 @@
         padding: 0.5rem 0.75rem;
       }
       
-      .input-field, .select-field {
+      .input-field {
         padding: 0.75rem 0.875rem;
         font-size: 0.875rem;
       }
@@ -800,7 +770,7 @@
         padding: 0.75rem 0.5rem;
       }
       
-      .calculator-grid {
+      .calculator-wrapper {
         gap: 0.75rem;
       }
       
@@ -875,8 +845,8 @@
       </button>
     </div>
 
-    <div class="calculator-grid">
-      <!-- Robux Calculator -->
+    <div class="calculator-wrapper">
+      <!-- Robux Calculator Only -->
       <div class="calculator-card" id="robuxCalculator">
         <div class="card-header">
           <div class="card-icon">
@@ -954,123 +924,6 @@
           </div>
           <div class="info-content" id="robuxInfoContent">
             Mode Before Tax: Harga sebelum potongan 30% yang diterima pembeli
-          </div>
-        </div>
-      </div>
-
-      <!-- TCC Calculator -->
-      <div class="calculator-card" id="tccCalculator">
-        <div class="card-header">
-          <div class="card-icon">
-            <i class="fas fa-calculator"></i>
-          </div>
-          <h2 class="card-title">TCC Kalkulator</h2>
-        </div>
-        
-        <div class="input-group">
-          <label class="input-label">Harga USD</label>
-          <input type="number" class="input-field" id="usdInput" step="0.01" placeholder="0.00" oninput="hitungTCC()" min="0">
-        </div>
-        
-        <div class="input-group">
-          <label class="input-label">Rate USD</label>
-          <select class="select-field" id="rateSelect" onchange="toggleCustomRate(); hitungTCC();">
-            <option value="16000">16.000</option>
-            <option value="16100">16.100</option>
-            <option value="16200">16.200</option>
-            <option value="16300">16.300</option>
-            <option value="16400">16.400</option>
-            <option value="16500" selected>16.500</option>
-            <option value="16600">16.600</option>
-            <option value="16700">16.700</option>
-            <option value="16800">16.800</option>
-            <option value="16900">16.900</option>
-            <option value="17000">17.000</option>
-            <option value="custom">Custom Rate</option>
-          </select>
-        </div>
-        
-        <div id="customRate" class="custom-input">
-          <div class="input-group">
-            <label class="input-label">Rate Manual</label>
-            <input type="number" class="input-field" id="customRateInput" placeholder="Masukkan rate manual" oninput="hitungTCC()" min="0">
-          </div>
-        </div>
-        
-        <div class="input-group">
-          <label class="input-label">Profit</label>
-          <select class="select-field" id="profitSelect" onchange="toggleCustomProfit(); hitungTCC();">
-            <option value="0">Rp 0</option>
-            <option value="1000">Rp 1.000</option>
-            <option value="2000">Rp 2.000</option>
-            <option value="3000">Rp 3.000</option>
-            <option value="4000">Rp 4.000</option>
-            <option value="5000">Rp 5.000</option>
-            <option value="6000">Rp 6.000</option>
-            <option value="7000">Rp 7.000</option>
-            <option value="8000">Rp 8.000</option>
-            <option value="9000">Rp 9.000</option>
-            <option value="10000">Rp 10.000</option>
-            <option value="custom">Custom Profit</option>
-          </select>
-        </div>
-        
-        <div id="customProfit" class="custom-input">
-          <div class="input-group">
-            <label class="input-label">Profit Manual</label>
-            <input type="number" class="input-field" id="customProfitInput" placeholder="Masukkan profit manual" oninput="hitungTCC()" min="0">
-          </div>
-        </div>
-        
-        <div class="result-table" id="tccResultTable">
-          <div class="result-total">
-            <div class="result-total-label">Total TCC</div>
-            <div class="result-total-value" id="tccTotal">Rp 0</div>
-          </div>
-          
-          <div class="result-details">
-            <div class="result-detail-item">
-              <div class="result-detail-label">Harga USD</div>
-              <div class="result-detail-value" id="tccValue1">$0.00</div>
-            </div>
-            <div class="result-detail-item">
-              <div class="result-detail-label">Rate USD</div>
-              <div class="result-detail-value" id="tccValue2">0</div>
-            </div>
-            <div class="result-detail-item">
-              <div class="result-detail-label">Profit</div>
-              <div class="result-detail-value" id="tccValue3">Rp 0</div>
-            </div>
-            <div class="result-detail-item">
-              <div class="result-detail-label">Subtotal</div>
-              <div class="result-detail-value" id="tccValue4">Rp 0</div>
-            </div>
-          </div>
-          
-          <div class="result-formula" id="tccFormula">
-            (USD × Rate) + Profit = Total
-          </div>
-        </div>
-        
-        <div class="action-buttons">
-          <button class="action-button secondary" onclick="resetTCC()">
-            <i class="fas fa-redo"></i> Reset
-          </button>
-          <button class="action-button primary" onclick="copyTCCResult()">
-            <i class="fas fa-copy"></i> Salin
-          </button>
-          <button class="action-button buy" onclick="buyTCC()">
-            <i class="fab fa-whatsapp"></i> Beli
-          </button>
-        </div>
-        
-        <div class="info-box">
-          <div class="info-title">
-            <i class="fas fa-info-circle info-icon"></i>
-            <span>Panduan Penggunaan</span>
-          </div>
-          <div class="info-content">
-            TCC = (Harga USD × Rate) + Profit. Masukkan nilai yang sesuai untuk menghitung total biaya transaksi.
           </div>
         </div>
       </div>
@@ -1202,89 +1055,10 @@
       hitungRobux();
     }
 
-    // TCC Functions
-    function toggleCustomRate() {
-      const rateSelect = document.getElementById('rateSelect');
-      const customRate = document.getElementById('customRate');
-      
-      if (rateSelect.value === 'custom') {
-        customRate.classList.add('active');
-        document.getElementById('customRateInput').focus();
-      } else {
-        customRate.classList.remove('active');
-      }
-    }
-
-    function toggleCustomProfit() {
-      const profitSelect = document.getElementById('profitSelect');
-      const customProfit = document.getElementById('customProfit');
-      
-      if (profitSelect.value === 'custom') {
-        customProfit.classList.add('active');
-        document.getElementById('customProfitInput').focus();
-      } else {
-        customProfit.classList.remove('active');
-      }
-    }
-
-    function hitungTCC() {
-      let usd = parseFloat(document.getElementById("usdInput").value) || 0;
-      let rateSelect = document.getElementById("rateSelect");
-      let profitSelect = document.getElementById("profitSelect");
-      let resultTable = document.getElementById("tccResultTable");
-      
-      // Get rate value
-      let rate;
-      if (rateSelect.value === 'custom') {
-        rate = parseFloat(document.getElementById("customRateInput").value) || 0;
-      } else {
-        rate = parseInt(rateSelect.value);
-      }
-      
-      // Get profit value
-      let profit;
-      if (profitSelect.value === 'custom') {
-        profit = parseFloat(document.getElementById("customProfitInput").value) || 0;
-      } else {
-        profit = parseInt(profitSelect.value);
-      }
-      
-      if (usd <= 0 || rate <= 0) {
-        resultTable.classList.remove("active");
-        return;
-      }
-      
-      resultTable.classList.add("active");
-      
-      // Calculate values
-      let usdToIdr = usd * rate;
-      let total = Math.round(usdToIdr + profit);
-      
-      // Update detailed result
-      document.getElementById("tccTotal").innerText = formatRupiah(total);
-      document.getElementById("tccValue1").innerText = `$${usd.toFixed(2)}`;
-      document.getElementById("tccValue2").innerText = rate.toLocaleString('id-ID');
-      document.getElementById("tccValue3").innerText = formatRupiah(profit);
-      document.getElementById("tccValue4").innerText = formatRupiah(usdToIdr);
-      document.getElementById("tccFormula").innerText = 
-        `($${usd.toFixed(2)} × ${rate.toLocaleString('id-ID')}) + ${formatRupiah(profit)} = ${formatRupiah(total)}`;
-    }
-
     function resetRobux() {
       document.getElementById("robuxInput").value = "";
       document.getElementById("rateInput").value = "";
       document.getElementById("robuxResultTable").classList.remove("active");
-    }
-
-    function resetTCC() {
-      document.getElementById("usdInput").value = "";
-      document.getElementById("rateSelect").value = "16500";
-      document.getElementById("profitSelect").value = "0";
-      document.getElementById("customRateInput").value = "";
-      document.getElementById("customProfitInput").value = "";
-      document.getElementById("customRate").classList.remove("active");
-      document.getElementById("customProfit").classList.remove("active");
-      document.getElementById("tccResultTable").classList.remove("active");
     }
 
     function copyRobuxResult() {
@@ -1299,33 +1073,11 @@
       });
     }
 
-    function copyTCCResult() {
-      const total = document.getElementById("tccTotal").innerText;
-      const formula = document.getElementById("tccFormula").innerText;
-      const text = `${total}\n${formula}`;
-      
-      navigator.clipboard.writeText(text).then(() => {
-        showCopyFeedback();
-      }).catch(err => {
-        console.error('Gagal menyalin: ', err);
-      });
-    }
-
     function buyRobux() {
       const total = document.getElementById("robuxTotal").innerText;
       const formula = document.getElementById("robuxFormula").innerText;
       const phoneNumber = "6283821170532";
       const text = `*Pesan Pembelian Robux*\n\n${total}\n${formula}\n\nSaya ingin membeli Robux dengan detail di atas.`;
-      
-      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
-      window.open(whatsappUrl, '_blank');
-    }
-
-    function buyTCC() {
-      const total = document.getElementById("tccTotal").innerText;
-      const formula = document.getElementById("tccFormula").innerText;
-      const phoneNumber = "6283821170532";
-      const text = `*Pesan Pembelian TCC*\n\n${total}\n${formula}\n\nSaya ingin membeli TCC dengan detail di atas.`;
       
       const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
       window.open(whatsappUrl, '_blank');
@@ -1363,10 +1115,6 @@
 
     // Inisialisasi
     document.addEventListener('DOMContentLoaded', function() {
-      // Set default values
-      document.getElementById("rateSelect").value = "16500";
-      document.getElementById("profitSelect").value = "0";
-      
       // Focus on first input
       setTimeout(() => {
         document.getElementById("robuxInput").focus();
