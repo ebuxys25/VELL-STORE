@@ -1025,7 +1025,8 @@
         document.getElementById("robuxValue1").innerText = inputVal.toLocaleString('id-ID');
         document.getElementById("robuxLabel2").innerText = "Rate";
         document.getElementById("robuxValue2").innerText = rate.toLocaleString('id-ID');
-        document.getElementById("robuxLabel3").innerText = "Robux Dikirim";
+        // PERUBAHAN 1: Lebih natural "Harga Gamepass"
+        document.getElementById("robuxLabel3").innerText = "Harga Gamepass";
         document.getElementById("robuxValue3").innerText = seller.toLocaleString('id-ID');
         document.getElementById("robuxLabel4").innerText = "Total Harga";
         document.getElementById("robuxValue4").innerText = formatRupiah(price);
@@ -1043,7 +1044,8 @@
         document.getElementById("robuxValue2").innerText = rate.toLocaleString('id-ID');
         document.getElementById("robuxLabel3").innerText = "Robux Diterima";
         document.getElementById("robuxValue3").innerText = rb.toLocaleString('id-ID');
-        document.getElementById("robuxLabel4").innerText = "Robux Dikirim";
+        // PERUBAHAN 2: Lebih natural "Harga Gamepass"
+        document.getElementById("robuxLabel4").innerText = "Harga Gamepass";
         document.getElementById("robuxValue4").innerText = seller.toLocaleString('id-ID');
         document.getElementById("robuxFormula").innerText = 
           `${formatRupiah(inputVal)} ÷ ${rate.toLocaleString('id-ID')} = ${rb.toLocaleString('id-ID')} Robux (Dikirim: ${seller.toLocaleString('id-ID')})`;
@@ -1123,4 +1125,3 @@
   </script>
 </body>
 </html>
-
