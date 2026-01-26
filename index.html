@@ -837,24 +837,30 @@
           <h2 class="card-title">Robux Gamepass 5 Hari</h2>
         </div>
         
+        <!-- TAMBAHAN FITUR LOGIN -->
+        <div class="input-group">
+            <label class="input-label"><i class="fas fa-user"></i> Nama Pengguna Roblox (Username)</label>
+            <input type="text" class="input-field" id="robloxUser" placeholder="Contoh: NoobMaster69">
+        </div>
+
         <div class="tabs-container">
           <div class="tabs">
-            <!-- Tab After Tax DIUBAH NAMANYA JADI Robux -> Rp -->
-            <button class="tab-button" onclick="setMode('after')" id="tab-after">Robux → Rp</button>
+            <!-- Tab Robux -> Rp (Default Utama) -->
+            <button class="tab-button active" onclick="setMode('after')" id="tab-after">Robux → Rp</button>
             
-            <!-- Tab Rp -> Robux (Default) -->
-            <button class="tab-button active" onclick="setMode('rupiah')" id="tab-rupiah">Rp → Robux</button>
+            <!-- Tab Rp -> Robux -->
+            <button class="tab-button" onclick="setMode('rupiah')" id="tab-rupiah">Rp → Robux</button>
           </div>
         </div>
         
         <div class="input-group">
-          <!-- Default label text updated to match 'rupiah' mode -->
-          <label class="input-label" id="robuxInputLabel">Masukkan jumlah Rupiah</label>
+          <!-- Default label text updated to match 'after' mode (Robux input) -->
+          <label class="input-label" id="robuxInputLabel">Masukkan jumlah Robux</label>
           <input type="number" class="input-field" id="robuxInput" placeholder="0" oninput="debounceHitungRobux()" autofocus min="0">
         </div>
         
-        <!-- Quick Rp buttons shown by default -->
-        <div id="quickRp" class="quick-buttons"></div>
+        <!-- Quick Rp buttons (Hidden by default karena mode awal Robux) -->
+        <div id="quickRp" class="quick-buttons" style="display: none;"></div>
         
         <div class="result-table" id="robuxResultTable">
           <div class="result-total">
@@ -909,7 +915,7 @@
           </div>
           <!-- Default info content updated -->
           <div class="info-content" id="robuxInfoContent">
-            Mode Rp → Robux: Konversi Rupiah ke Robux dengan memperhitungan potongan 30%
+            Mode Robux → Rp: Masukkan jumlah Robux yang diinginkan, sistem akan menghitung harga Gamepass yang harus dibayar.
           </div>
         </div>
       </div>
@@ -931,18 +937,16 @@
   </div>
 
   <script>
-    // --- 1. INITIALIZE MODE TO 'rupiah' ---
-    let mode = "rupiah"; 
+    // --- 1. INITIALIZE MODE TO 'after' (Robux -> Rp) ---
+    let mode = "after"; 
     let debounceTimer;
     
     // --- LOAD CONFIGURATIONS ---
-    // Mengambil nilai dari config.js. Jika tidak terbaca (file hilang), gunakan nilai dari config lu.
     let currentRate = (typeof DEFAULT_RATE !== 'undefined') ? DEFAULT_RATE : 80;
     let discordLink = (typeof DISCORD_INVITE_LINK !== 'undefined') ? DISCORD_INVITE_LINK : "https://discord.gg/5wKzxaydh6";
     let bgImage = (typeof BACKGROUND_IMAGE !== 'undefined') ? BACKGROUND_IMAGE : "background.jpg";
     let whatsappNumber = (typeof WHATSAPP_PHONE_NUMBER !== 'undefined') ? WHATSAPP_PHONE_NUMBER : "6283821170532";
 
-    // Apply Background Image if exists
     if(bgImage) {
         const bgElement = document.getElementById('app-background');
         if(bgElement) {
@@ -961,7 +965,12 @@
 
     function setMode(m) {
       mode = m;
-      // Update tab styles
+      
+      // --- 2. RESET LOGIN INPUT SAAT GANTI TAB ---
+      document.getElementById("robloxUser").value = "";
+      document.getElementById("robloxUser").focus();
+      // -----------------------------------------
+
       document.querySelectorAll(".tab-button").forEach(b => b.classList.remove("active"));
       document.getElementById("tab-" + m).classList.add("active");
 
@@ -970,6 +979,10 @@
       let infoContent = document.getElementById("robuxInfoContent");
       let quickDiv = document.getElementById("quickRp");
       
+      // Reset input angka juga biar bersih
+      input.value = "";
+      document.getElementById("robuxResultTable").classList.remove("active");
+
       // Show/Hide Quick Rp Buttons
       quickDiv.style.display = (m === "rupiah") ? "grid" : "none";
 
@@ -978,7 +991,6 @@
         input.placeholder = "0";
         infoContent.innerHTML = "Mode Rp → Robux: Konversi Rupiah ke Robux dengan memperhitungan potongan 30%";
         
-        // Generate Quick Buttons only if empty
         if(quickDiv.innerHTML === "") {
             for (let i = 1; i <= 10; i++) {
             let val = i * 10000;
@@ -990,7 +1002,7 @@
           }
         }
       } else if (m === "after") {
-        // "after" sekarang menjadi mode "Robux -> Rp"
+        // Mode Default Utama
         label.innerText = "Masukkan jumlah Robux yang diinginkan";
         input.placeholder = "0";
         infoContent.innerHTML = "Mode Robux → Rp: Masukkan jumlah Robux yang ingin kamu terima, sistem akan menghitung harga Gamepass yang harus dibayar.";
@@ -1016,7 +1028,6 @@
       resultTable.classList.add("active");
       
       if (mode === "after") {
-        // Logika "Robux -> Rp"
         let targetRobux = inputVal;
         let sellerRobux = Math.ceil(targetRobux / 0.7); 
         let price = sellerRobux * rate;
@@ -1037,13 +1048,9 @@
         document.getElementById("robuxValue4").innerText = formatRupiah(price);
           
       } else if (mode === "rupiah") {
-        // Logika "Rp -> Robux"
         let rupiah = inputVal;
         let estimatedRobuxRaw = rupiah / rate;
-        
-        // Rumus potongan 30%
         let robuxReceived = Math.floor(estimatedRobuxRaw * 0.7);
-        
         let gamepassPrice = Math.ceil(estimatedRobuxRaw);
 
         document.getElementById("robuxTotal").innerText = formatRupiah(rupiah);
@@ -1069,12 +1076,14 @@
 
     function resetRobux() {
       document.getElementById("robuxInput").value = "";
+      document.getElementById("robloxUser").value = ""; // Reset Login juga
       document.getElementById("robuxResultTable").classList.remove("active");
     }
 
     // Fungsi khusus untuk WhatsApp
     function buyRobuxWA() {
       const total = document.getElementById("robuxTotal").innerText;
+      const username = document.getElementById("robloxUser").value || "Belum diisi";
       const label1 = document.getElementById("robuxLabel1").innerText;
       const value1 = document.getElementById("robuxValue1").innerText;
       const label3 = document.getElementById("robuxLabel3").innerText;
@@ -1082,7 +1091,7 @@
       const label4 = document.getElementById("robuxLabel4").innerText;
       const value4 = document.getElementById("robuxValue4").innerText;
       
-      const message = `Halo Admin, saya mau order Robux.\n\n💰 *Total:* ${total}\n📊 *Rincian:*\n${label1}: ${value1}\n${label3}: ${value3}\n${label4}: ${value4}\n\nMohon diproses ya!`;
+      const message = `Halo Admin, saya mau order Robux.\n\n👤 *Username:* ${username}\n💰 *Total:* ${total}\n📊 *Rincian:*\n${label1}: ${value1}\n${label3}: ${value3}\n${label4}: ${value4}\n\nMohon diproses ya!`;
       
       const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
       
@@ -1095,6 +1104,7 @@
     // Fungsi khusus untuk Discord
     function buyRobuxDiscord() {
       const total = document.getElementById("robuxTotal").innerText;
+      const username = document.getElementById("robloxUser").value || "Belum diisi";
       const label1 = document.getElementById("robuxLabel1").innerText;
       const value1 = document.getElementById("robuxValue1").innerText;
       const label3 = document.getElementById("robuxLabel3").innerText;
@@ -1102,7 +1112,7 @@
       const label4 = document.getElementById("robuxLabel4").innerText;
       const value4 = document.getElementById("robuxValue4").innerText;
 
-      const message = `📋 **PESANAN BARU - RBX MARKET**\n💰 Total: ${total}\n📊 **Rincian:**\n**${label1}:** ${value1}\n**${label3}:** ${value3}\n**${label4}:** ${value4}\n\nMohon diproses ya Min!`;
+      const message = `📋 **PESANAN BARU - RBX MARKET**\n👤 **Username:** ${username}\n💰 Total: ${total}\n📊 **Rincian:**\n**${label1}:** ${value1}\n**${label3}:** ${value3}\n**${label4}:** ${value4}\n\nMohon diproses ya Min!`;
       
       navigator.clipboard.writeText(message).then(() => {
         showToastDiscord();
@@ -1154,10 +1164,11 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      setMode('rupiah');
+      // Panggil setMode('after') saat load agar UI konsisten dengan variable mode
+      setMode('after');
       
       setTimeout(() => {
-        document.getElementById("robuxInput").focus();
+        document.getElementById("robloxUser").focus();
       }, 300);
     });
   </script>
