@@ -60,6 +60,8 @@
       min-height: 100vh;
       background-color: #0a0e1a; 
       transition: background-color 0.3s ease;
+      /* Padding bawah body biar konten ga mentok pinggir browser edge */
+      padding-bottom: 3rem;
     }
 
     #app-background {
@@ -98,7 +100,14 @@
     }
     
     /* MAIN CONTAINER */
-    .main-container { max-width: 800px; margin: 0 auto; padding: 1.5rem 1rem; width: 100%; }
+    .main-container { 
+      max-width: 800px; /* Dibatasi lebar max jadi 800px */
+      margin: 0 auto; 
+      padding: 1.5rem 1rem; 
+      width: 100%; 
+      /* Jarak bawah konten biar tidak mepet pinggir layar */
+      margin-bottom: 2rem; 
+    }
     
     /* IMPORTANT NOTICE */
     .important-notice {
@@ -116,6 +125,7 @@
     .calculator-card {
       background: var(--bg-card); border-radius: 0.75rem; padding: 1.25rem;
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3); border: 1px solid var(--border-color);
+      margin-bottom: 2.5rem; /* Jarak bawah kartu biar notice jadi lebih jauh */
     }
     .calculator-card::before {
       content: ''; position: absolute; top: 0; left: 0; right: 0; height: 0.25rem;
@@ -204,7 +214,7 @@
     #loginActionArea { display: none; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color); }
 
     /* FOOTER */
-    .footer { text-align: center; padding: 1.5rem 1rem; color: var(--text-secondary); font-size: 0.8rem; margin-top: 2rem; }
+    .footer { text-align: center; padding: 1.5rem 1rem; color: var(--text-secondary); font-size: 0.8rem; }
 
     /* TOAST */
     .toast {
@@ -243,17 +253,6 @@
   </header>
 
   <main class="main-container">
-    <!-- Important Notice -->
-    <div class="important-notice">
-      <div class="important-notice-content">
-        <h4><i class="fas fa-exclamation-triangle"></i> Informasi Harga</h4>
-        <p class="important-notice-text">Dapatkan harga terbaik di server Discord kami. Layanan: Robux via Login, Gamepass, dan AWR.</p>
-      </div>
-      <button class="important-notice-button" onclick="window.open(discordLink, '_blank')">
-        <i class="fab fa-discord"></i> Join Discord
-      </button>
-    </div>
-
     <div class="calculator-card">
       <div class="card-header">
         <div class="card-icon"><i class="fas fa-coins"></i></div>
@@ -267,7 +266,7 @@
       </div>
 
       <!-- LOGIN INPUT (Selalu muncul) -->
-      <div class="input-group">
+      <div class="input-group" id="usernameInputContainer">
         <label class="input-label"><i class="fas fa-user"></i> Username Roblox</label>
         <input type="text" class="input-field" id="robloxUser" placeholder="ketik username di sini">
       </div>
@@ -292,6 +291,8 @@
           <div class="calc-row">
             <label class="input-label">Masukkan Jumlah IDR</label>
             <input type="text" class="input-field" id="idrInput" placeholder="Contoh: 100.000" oninput="formatInput(this, 'idr')" onkeyup="handleCalcInput('idr')">
+            
+            <!-- DIV YANG DIMINTA DIPINDAHKAN (POSISINYA BERSAMA DI BAWAH KOLOM IDR) -->
             <div class="result-box">
               <div class="result-label">Total Harga</div>
               <div class="result-value highlight-value" id="calcTotal">Rp 0</div>
@@ -341,6 +342,17 @@
         <strong style="color:var(--discord-color)"><i class="fas fa-info-circle"></i> Info:</strong> 
         <span id="infoText">Klik Pilihan Cepat yang diinginkan di atas. Lalu klik tombol beli.</span>
       </div>
+    </div>
+
+    <!-- Important Notice Moved to Below Main Container -->
+    <div class="important-notice">
+      <div class="important-notice-content">
+        <h4><i class="fas fa-exclamation-triangle"></i> Informasi Harga</h4>
+        <p class="important-notice-text">Dapatkan harga terbaik di server Discord kami. Layanan: Robux via Login, Gamepass, dan AWR.</p>
+      </div>
+      <button class="important-notice-button" onclick="window.open(discordLink, '_blank')">
+        <i class="fab fa-discord"></i> Join Discord
+      </button>
     </div>
   </main>
 
@@ -411,11 +423,17 @@
         loginDiv.classList.remove('active');
         cardTitle.innerText = "ROBUX - GAMEPASS";
         infoText.innerText = "Isi salah satu kolom di atas, sistem akan otomatis menghitung yang lain.";
+        
+        // Tampilkan Input Username di Mode Gamepass (JANGAN DI VIA LOGIN)
+        document.getElementById('usernameInputContainer').style.display = 'block'; 
       } else {
         calcDiv.style.display = 'none';
         loginDiv.classList.add('active');
         cardTitle.innerText = "ROBUX - VILOG";
         infoText.innerText = "Pilih paket yang diinginkan di atas. Lalu klik tombol beli.";
+
+        // Sembunykan Input Username di Mode Via Login (JANGAN DI VIA LOGIN)
+        document.getElementById('usernameInputContainer').style.display = 'none'; 
       }
     }
 
