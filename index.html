@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RBX MARKET - Kalkulator Robux</title>
+  <title>RBX MARKET - Robux Gamepass 5 Hari</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
-  <!-- Load Config File -->
+  <!-- Load Config File (Wajib ada di folder yang sama) -->
   <script src="config.js"></script>
 
   <style>
     :root {
       /* Dark Theme */
-      --bg-primary: rgba(10, 14, 26, 0.85); /* Transparan untuk background image */
+      --bg-primary: rgba(10, 14, 26, 0.85);
       --bg-secondary: #151923;
-      --bg-card: rgba(30, 35, 49, 0.9); /* Transparan */
+      --bg-card: rgba(30, 35, 49, 0.9);
       --bg-input: #2a3142;
       --text-primary: #ffffff;
       --text-secondary: #a0aec0;
@@ -27,11 +27,11 @@
       --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
       --info-bg: rgba(79, 70, 229, 0.1);
       --info-border: #4f46e5;
-      --discord-color: #5865F2;
-      --whatsapp-color: #25D366;
-      --buy-button: #25D366; /* Warna tombol beli hijau default */
+      --discord-color: #5865F2; 
+      --buy-button: #5865F2; 
       --important-bg: rgba(245, 158, 11, 0.1);
       --important-border: #f59e0b;
+      --whatsapp-color: #25D366;
       
       /* Light Theme */
       --light-bg-primary: rgba(248, 250, 252, 0.9);
@@ -98,7 +98,6 @@
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      /* Overlay gelap */
       box-shadow: inset 0 0 100px rgba(0,0,0,0.7);
     }
     
@@ -430,7 +429,8 @@
     
     /* Action Buttons */
     .action-buttons {
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 0.75rem;
       margin-top: 1.5625rem;
     }
@@ -451,9 +451,8 @@
       white-space: nowrap;
     }
     
-    .action-button.primary {
-      background: linear-gradient(135deg, var(--discord-color), var(--accent-secondary));
-      color: white;
+    .action-button.full-width {
+      grid-column: 1 / -1;
     }
     
     .action-button.secondary {
@@ -462,8 +461,14 @@
       border: 1px solid var(--border-color);
     }
     
-    .action-button.buy {
-      background: var(--buy-button);
+    .action-button.discord-buy {
+      background: var(--discord-color);
+      color: white;
+      box-shadow: 0 4px 12px rgba(88, 101, 242, 0.3);
+    }
+
+    .action-button.whatsapp-buy {
+      background: var(--whatsapp-color);
       color: white;
       box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
     }
@@ -473,12 +478,14 @@
       box-shadow: var(--shadow);
     }
     
-    .action-button.primary:hover {
-      box-shadow: 0 0.625rem 0.9375rem -0.1875rem rgba(79, 70, 229, 0.3);
+    .action-button.whatsapp-buy:hover {
+      background: #1ebc57;
+      box-shadow: 0 0.625rem 0.9375rem -0.1875rem rgba(37, 211, 102, 0.4);
     }
-    
-    .action-button.buy:hover {
-      opacity: 0.9;
+
+    .action-button.discord-buy:hover {
+      background: #4752c4;
+      box-shadow: 0 0.625rem 0.9375rem -0.1875rem rgba(88, 101, 242, 0.4);
     }
     
     /* Result Table */
@@ -715,7 +722,7 @@
       }
       
       .action-buttons {
-        flex-direction: column;
+        grid-template-columns: 1fr;
         gap: 0.5rem;
       }
       
@@ -799,6 +806,7 @@
     <div class="brand-container">
       <div class="brand">
         <div class="brand-logo">
+            <!-- LOCAL FILE REFERENCE: icon.png -->
             <img src="icon.png" alt="RBX MARKET Logo">
         </div>
         <div class="brand-name-container">
@@ -818,16 +826,16 @@
       <div class="important-notice-content">
         <div class="important-notice-title">
           <i class="fas fa-exclamation-triangle"></i>
-          <span>Informasi Rate</span>
+          <span>Informasi Harga</span>
         </div>
         <p class="important-notice-text">
-          Rate Robux sudah di-set otomatis. Untuk perubahan harga, admin akan update via config.
+          Nikmati harga Robux yang lebih hemat khusus member server Discord kami. Kami juga menyediakan Robux Via Login, Via Grup, Awr/Tcc.
         </p>
       </div>
       <!-- Button Opens Discord -->
       <button class="important-notice-button" onclick="checkRate()">
         <i class="fab fa-discord"></i>
-        Cek Rate
+        Join Discord
       </button>
     </div>
 
@@ -838,7 +846,7 @@
           <div class="card-icon">
             <i class="fas fa-coins"></i>
           </div>
-          <h2 class="card-title">Kalkulator Robux</h2>
+          <h2 class="card-title">Robux Gamepass 5 Hari</h2>
         </div>
         
         <div class="tabs-container">
@@ -868,6 +876,7 @@
               <div class="result-detail-value" id="robuxValue1">0</div>
             </div>
             
+            <!-- RATE DETAILS DIHAPUS DENGAN CLASS 'hidden-detail' -->
             <div class="result-detail-item hidden-detail" id="robuxRateItem">
               <div class="result-detail-label" id="robuxLabel2">Rate</div>
               <div class="result-detail-value" id="robuxValue2">0</div>
@@ -888,16 +897,18 @@
           </div>
         </div>
         
+        <!-- Tombol Aksi: Reset, WA, Discord -->
         <div class="action-buttons">
-          <button class="action-button secondary" onclick="resetRobux()">
+          <button class="action-button secondary full-width" onclick="resetRobux()">
             <i class="fas fa-redo"></i> Reset
           </button>
-          <button class="action-button primary" onclick="copyRobuxResult()">
-            <i class="fas fa-copy"></i> Salin
+          
+          <button class="action-button whatsapp-buy" onclick="buyRobuxWA()">
+            <i class="fab fa-whatsapp"></i> WhatsApp
           </button>
-          <!-- Tombol Beli Dinamis -->
-          <button class="action-button buy" onclick="buyRobux()" id="buyButton">
-            <i class="fab fa-whatsapp" id="buyIcon"></i> <span id="buyText">Beli</span>
+          
+          <button class="action-button discord-buy" onclick="buyRobuxDiscord()">
+            <i class="fab fa-discord"></i> Discord
           </button>
         </div>
         
@@ -923,8 +934,8 @@
   <div id="toast" class="toast">
     <i class="fas fa-check-circle" style="color: var(--success); font-size: 1.5rem;"></i>
     <div>
-      <div style="font-weight: 700;">Disalin!</div>
-      <div style="font-size: 0.8rem; color: var(--text-secondary);">Siap dikirim ke pembeli.</div>
+      <div style="font-weight: 700;">Membuka WhatsApp...</div>
+      <div style="font-size: 0.8rem; color: var(--text-secondary);">Pesan order otomatis terkirim.</div>
     </div>
   </div>
 
@@ -933,35 +944,17 @@
     let debounceTimer;
     
     // --- LOAD CONFIGURATIONS ---
+    // Cek apakah config.js terbaca, jika tidak gunakan nilai default
     let currentRate = (typeof DEFAULT_RATE !== 'undefined') ? DEFAULT_RATE : 85;
     let discordLink = (typeof DISCORD_INVITE_LINK !== 'undefined') ? DISCORD_INVITE_LINK : "#";
     let bgImage = (typeof BACKGROUND_IMAGE !== 'undefined') ? BACKGROUND_IMAGE : "";
-    let waNumber = (typeof WHATSAPP_PHONE_NUMBER !== 'undefined') ? WHATSAPP_PHONE_NUMBER : "";
+    let whatsappNumber = (typeof WHATSAPP_PHONE_NUMBER !== 'undefined') ? WHATSAPP_PHONE_NUMBER : "6283821170532";
 
     // Apply Background Image if exists
     if(bgImage) {
         const bgElement = document.getElementById('app-background');
         if(bgElement) {
             bgElement.style.backgroundImage = `url('${bgImage}')`;
-        }
-    }
-
-    // Setup Tombol Beli (Cek apakah pakai WA atau Discord)
-    function setupBuyButton() {
-        const btn = document.getElementById('buyButton');
-        const icon = document.getElementById('buyIcon');
-        const text = document.getElementById('buyText');
-
-        if (waNumber && waNumber !== "") {
-            // Mode WhatsApp
-            btn.style.background = "var(--whatsapp-color)";
-            icon.className = "fab fa-whatsapp";
-            text.innerText = "Beli via WA";
-        } else {
-            // Mode Discord
-            btn.style.background = "var(--discord-color)";
-            icon.className = "fab fa-discord";
-            text.innerText = "Beli via Discord";
         }
     }
     // ---------------------
@@ -1095,54 +1088,68 @@
       document.getElementById("robuxResultTable").classList.remove("active");
     }
 
-    function copyRobuxResult() {
+    // Fungsi khusus untuk WhatsApp
+    function buyRobuxWA() {
       const total = document.getElementById("robuxTotal").innerText;
       const formula = document.getElementById("robuxFormula").innerText;
-      const text = `*Order RBX MARKET*\n\n${total}\n${formula}`;
+      // Format pesan WhatsApp
+      const message = `Halo Admin, saya mau order Robux.\n\n💰 *Total:* ${total}\n📝 *Detail:* ${formula}\n\nMohon diproses ya!`;
       
-      navigator.clipboard.writeText(text).then(() => {
-        showToast();
-      }).catch(err => {
-        console.error('Gagal menyalin: ', err);
-      });
+      // Encode URL agar aman untuk link
+      const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+      
+      showToastWA();
+      setTimeout(() => {
+          window.open(url, '_blank');
+      }, 1000);
     }
 
-    // Fungsi Beli Dinamis (Bisa WA atau Discord)
-    function buyRobux() {
+    // Fungsi khusus untuk Discord
+    function buyRobuxDiscord() {
       const total = document.getElementById("robuxTotal").innerText;
       const formula = document.getElementById("robuxFormula").innerText;
+      const message = `📋 **PESANAN BARU - RBX MARKET**\n💰 Total: ${total}\n📝 Detail: ${formula}\n\nMohon diproses ya Min!`;
       
-      // Tentukan platform tujuan
-      let targetLink = "";
-      let platformName = "";
-
-      if (waNumber && waNumber !== "") {
-          targetLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(`*PESANAN BARU - RBX MARKET*\n\n${total}\n${formula}\n\nMohon diproses ya Min!`)}`;
-          platformName = "WhatsApp";
-      } else {
-          // Fallback ke Discord kalau WA kosong
-          navigator.clipboard.writeText(`📋 **PESANAN BARU - RBX MARKET**\n💰 Total: ${total}\n📝 Detail: ${formula}\n\nMohon diproses ya Min!`).then(() => {
-             showToast(); 
-          });
-          setTimeout(() => {
-              window.open(discordLink, '_blank');
-          }, 1500);
-          return; // Stop di sini untuk mode Discord
-      }
-
-      // Eksekusi ke WhatsApp
-      window.open(targetLink, '_blank');
+      navigator.clipboard.writeText(message).then(() => {
+        showToastDiscord();
+        setTimeout(() => {
+            window.open(discordLink, '_blank');
+        }, 1500);
+      }).catch(err => {
+        console.error('Gagal menyalin: ', err);
+        window.open(discordLink, '_blank'); 
+      });
     }
 
     function checkRate() {
       window.open(discordLink, '_blank');
     }
 
-    function showToast() {
+    function showToastWA() {
       const toast = document.getElementById("toast");
+      // Ubah icon dan teks sementara untuk WA
+      toast.innerHTML = `<i class="fab fa-whatsapp" style="color: var(--whatsapp-color); font-size: 1.5rem;"></i><div><div style="font-weight: 700;">Membuka WhatsApp...</div><div style="font-size: 0.8rem; color: var(--text-secondary);">Pesan order otomatis terkirim.</div></div>`;
       toast.classList.add("show");
       setTimeout(() => {
         toast.classList.remove("show");
+        // Reset toast ke default setelah hilang
+        setTimeout(() => {
+            toast.innerHTML = `<i class="fas fa-check-circle" style="color: var(--success); font-size: 1.5rem;"></i><div><div style="font-weight: 700;">Pesan Disalin!</div><div style="font-size: 0.8rem; color: var(--text-secondary);">Paste di Discord untuk order.</div></div>`;
+        }, 500);
+      }, 3000);
+    }
+
+    function showToastDiscord() {
+      const toast = document.getElementById("toast");
+      // Set icon dan teks untuk Discord
+      toast.innerHTML = `<i class="fab fa-discord" style="color: var(--discord-color); font-size: 1.5rem;"></i><div><div style="font-weight: 700;">Pesan Disalin!</div><div style="font-size: 0.8rem; color: var(--text-secondary);">Membuka Discord...</div></div>`;
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+        // Reset toast ke default
+        setTimeout(() => {
+            toast.innerHTML = `<i class="fas fa-check-circle" style="color: var(--success); font-size: 1.5rem;"></i><div><div style="font-weight: 700;">Pesan Disalin!</div><div style="font-size: 0.8rem; color: var(--text-secondary);">Paste di Discord untuk order.</div></div>`;
+        }, 500);
       }, 3000);
     }
 
@@ -1157,7 +1164,6 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      setupBuyButton(); // Jalankan setup tombol saat load
       setTimeout(() => {
         document.getElementById("robuxInput").focus();
       }, 300);
