@@ -4,7 +4,7 @@
 
 // 1. PENGATURAN LINK DISCORD
 // Untuk tombol "Join Discord" & "Beli via Discord"
-const DISCORD_INVITE_LINK = "https://discord.gg/5wKzxaydh6";
+const DISCORD_INVITE_LINK = "https://discord.gg/MUj5Rw3mUV";
 
 // 2. PENGATURAN LINK WHATSAPP
 // Untuk tombol "Beli via WhatsApp" (Format: Kode negara + Nomor, tanpa tanda +)
@@ -22,22 +22,23 @@ const BACKGROUND_IMAGE = "background.jpg";
 // Edit daftar paket di sini. Format: { amount: JumlahRobux, price: HargaDalamRupiah }
 const LOGIN_PACKAGES = {
   premium: [
-    { amount: 450, price: 72000 },
-    { amount: 1000, price: 144000 },
-    { amount: 2200, price: 288000 }
+    { amount: 450, price: 74500 },
+    { amount: 1000, price: 148000 },
+    { amount: 2200, price: 292000 }
   ],
   regular: [
-    { amount: 80, price: 15000 },
-    { amount: 160, price: 30000 },
-    { amount: 240, price: 45000 },
-    { amount: 320, price: 60000 },
-    { amount: 500, price: 72000 },
-    { amount: 1000, price: 144000 },
-    { amount: 1500, price: 216000 },
-    { amount: 2000, price: 288000 }
+    { amount: 80, price: 16000 },
+    { amount: 160, price: 31000 },
+    { amount: 240, price: 46000 },
+    { amount: 320, price: 61000 },
+    { amount: 500, price: 73000 },
+    { amount: 1000, price: 146000 },
+    { amount: 1500, price: 219000 },
+    { amount: 2000, price: 292000 }
   ]
 };
 
 // ==========================================
 // AKHIR KONFIGURASI
 // ==========================================
+
