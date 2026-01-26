@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RBX MARKET - Robux Gamepass 5 Hari</title>
+  <title>RBX MARKET</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <!-- Load Config File (Wajib ada di folder yang sama) -->
@@ -817,7 +817,7 @@
           <span>Informasi Harga</span>
         </div>
         <p class="important-notice-text">
-          Nikmati harga Robux yang lebih hemat khusus member server Discord kami. Kami juga menyediakan Robux Via Login, Via Grup, Awr/Tcc.
+          Dapatkan harga yang lebih murah dengan bergabung di server Discord kami. Layanan tersedia: Robux via Login, Grup, serta AWR/TCC.
         </p>
       </div>
       <!-- Button Opens Discord -->
@@ -834,22 +834,22 @@
           <div class="card-icon">
             <i class="fas fa-coins"></i>
           </div>
-          <h2 class="card-title">Robux Gamepass 5 Hari</h2>
+          <h2 class="card-title">Robux Via Gamepass</h2>
         </div>
         
         <!-- TAMBAHAN FITUR LOGIN -->
         <div class="input-group">
-            <label class="input-label"><i class="fas fa-user"></i> Nama Pengguna Roblox (Username)</label>
-            <input type="text" class="input-field" id="robloxUser" placeholder="Contoh: NoobMaster69">
+            <label class="input-label"><i class="fas fa-user"></i> Username Roblox</label>
+            <input type="text" class="input-field" id="robloxUser" placeholder="ketik username di sini">
         </div>
 
         <div class="tabs-container">
           <div class="tabs">
             <!-- Tab Robux -> Rp (Default Utama) -->
-            <button class="tab-button active" onclick="setMode('after')" id="tab-after">Robux → Rp</button>
+            <button class="tab-button active" onclick="setMode('after')" id="tab-after">Robux → IDR</button>
             
             <!-- Tab Rp -> Robux -->
-            <button class="tab-button" onclick="setMode('rupiah')" id="tab-rupiah">Rp → Robux</button>
+            <button class="tab-button" onclick="setMode('rupiah')" id="tab-rupiah">IDR → Robux</button>
           </div>
         </div>
         
@@ -1015,9 +1015,9 @@
       quickDiv.style.display = (m === "rupiah") ? "grid" : "none";
 
       if (m === "rupiah") {
-        label.innerText = "Masukkan jumlah Rupiah";
+        label.innerText = "Masukkan jumlah IDR";
         input.placeholder = "0";
-        infoContent.innerHTML = "Mode Rp → Robux: Konversi Rupiah ke Robux dengan memperhitungan potongan 30%";
+        infoContent.innerHTML = "Mode IDR → Robux: Konversi Rupiah ke Robux dengan memperhitungan setelah potongan pajak";
         
         if(quickDiv.innerHTML === "") {
             for (let i = 1; i <= 10; i++) {
@@ -1031,9 +1031,9 @@
         }
       } else if (m === "after") {
         // Mode Default Utama
-        label.innerText = "Masukkan jumlah Robux yang diinginkan";
+        label.innerText = "Jumlah Robux";
         input.placeholder = "0";
-        infoContent.innerHTML = "Mode Robux → Rp: Masukkan jumlah Robux yang ingin kamu terima, sistem akan menghitung harga Gamepass yang harus dibayar.";
+        infoContent.innerHTML = "Mode Robux → IDR: Masukkan jumlah Robux yang ingin kamu terima, sistem akan menghitung harga Gamepass yang harus dibayar.";
       } 
     }
 
@@ -1202,3 +1202,4 @@
   </script>
 </body>
 </html>
+
