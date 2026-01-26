@@ -6,15 +6,15 @@
   <title>RBX MARKET - Kalkulator Robux</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
-  <!-- Load Config File (Pastikan file ini ada di folder yang sama) -->
+  <!-- Load Config File (Wajib ada di folder yang sama) -->
   <script src="config.js"></script>
 
   <style>
     :root {
       /* Dark Theme */
-      --bg-primary: #0a0e1a;
+      --bg-primary: rgba(10, 14, 26, 0.85); /* Transparan untuk background image */
       --bg-secondary: #151923;
-      --bg-card: #1e2331;
+      --bg-card: rgba(30, 35, 49, 0.9); /* Transparan */
       --bg-input: #2a3142;
       --text-primary: #ffffff;
       --text-secondary: #a0aec0;
@@ -33,9 +33,9 @@
       --important-border: #f59e0b;
       
       /* Light Theme */
-      --light-bg-primary: #f8fafc;
+      --light-bg-primary: rgba(248, 250, 252, 0.9);
       --light-bg-secondary: #f1f5f9;
-      --light-bg-card: #ffffff;
+      --light-bg-card: rgba(255, 255, 255, 0.95);
       --light-bg-input: #f1f5f9;
       --light-text-primary: #1e293b;
       --light-text-secondary: #64748b;
@@ -78,12 +78,29 @@
     
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: var(--bg-primary);
       color: var(--text-primary);
       line-height: 1.6;
       transition: all 0.3s ease;
       min-height: 100vh;
       overflow-x: hidden;
+      /* Default fallback background color */
+      background-color: #0a0e1a; 
+    }
+
+    /* BACKGROUND IMAGE HANDLER */
+    #app-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      /* Background akan diset oleh JS dari config.js */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      /* Overlay gelap agar teks tetap terbaca di background apapun */
+      box-shadow: inset 0 0 100px rgba(0,0,0,0.7);
     }
     
     /* Header & Branding */
@@ -520,6 +537,10 @@
       margin-bottom: 1.25rem;
     }
     
+    .hidden-detail {
+      display: none !important;
+    }
+    
     .result-detail-item {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
@@ -549,28 +570,6 @@
       color: var(--discord-color);
       text-align: center;
       word-break: break-all;
-    }
-    
-    /* Custom Input */
-    .custom-input {
-      margin-top: 0.9375rem;
-      display: none;
-    }
-    
-    .custom-input.active {
-      display: block;
-      animation: slideDown 0.3s ease;
-    }
-    
-    @keyframes slideDown {
-      from {
-        opacity: 0;
-        transform: translateY(-0.625rem);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
     
     /* Info Box */
@@ -794,6 +793,9 @@
   </style>
 </head>
 <body>
+  <!-- BACKGROUND IMAGE CONTAINER -->
+  <div id="app-background"></div>
+
   <!-- Header -->
   <header class="app-header">
     <div class="brand-container">
@@ -857,7 +859,7 @@
         
         <div id="quickRp" class="quick-buttons" style="display: none;"></div>
         
-        <!-- INPUT RATE DIHAPUS DI SINI -->
+        <!-- INPUT RATE DIHAPUS -->
         
         <div class="result-table" id="robuxResultTable">
           <div class="result-total">
@@ -870,10 +872,13 @@
               <div class="result-detail-label" id="robuxLabel1">Jumlah Robux</div>
               <div class="result-detail-value" id="robuxValue1">0</div>
             </div>
-            <div class="result-detail-item">
+            
+            <!-- RATE DETAILS DIHAPUS DENGAN CLASS 'hidden-detail' -->
+            <div class="result-detail-item hidden-detail" id="robuxRateItem">
               <div class="result-detail-label" id="robuxLabel2">Rate</div>
               <div class="result-detail-value" id="robuxValue2">0</div>
             </div>
+
             <div class="result-detail-item">
               <div class="result-detail-label" id="robuxLabel3">Robux Diterima</div>
               <div class="result-detail-value" id="robuxValue3">0</div>
@@ -933,10 +938,18 @@
     let mode = "before";
     let debounceTimer;
     
-    // --- CONFIG CHECK ---
-    // Pastikan config.js sudah diload sebelum script ini jalan
+    // --- LOAD CONFIGURATIONS ---
     let currentRate = (typeof DEFAULT_RATE !== 'undefined') ? DEFAULT_RATE : 85;
     let discordLink = (typeof DISCORD_INVITE_LINK !== 'undefined') ? DISCORD_INVITE_LINK : "#";
+    let bgImage = (typeof BACKGROUND_IMAGE !== 'undefined') ? BACKGROUND_IMAGE : "";
+
+    // Apply Background Image if exists
+    if(bgImage) {
+        const bgElement = document.getElementById('app-background');
+        if(bgElement) {
+            bgElement.style.backgroundImage = `url('${bgImage}')`;
+        }
+    }
     // ---------------------
 
     function formatRupiah(angka) {
@@ -958,7 +971,9 @@
       let quickDiv = document.getElementById("quickRp");
       quickDiv.style.display = (m === "rupiah") ? "grid" : "none";
 
-      if (m === "rupiah") {
+      if (m === "rate") {
+        // Mode ini tidak dipakai lagi
+      } else if (m === "rupiah") {
         label.innerText = "Masukkan jumlah Rupiah";
         input.placeholder = "0";
         infoContent.innerHTML = "Mode Rp → Robux: Konversi Rupiah ke Robux dengan memperhitungan potongan 30%";
@@ -990,8 +1005,6 @@
 
     function hitungRobux() {
       let inputVal = parseFloat(document.getElementById("robuxInput").value) || 0;
-      
-      // RATE DIAMBIL DARI VARIABLE, BUKAN DARI INPUT
       let rate = currentRate; 
       
       let resultTable = document.getElementById("robuxResultTable");
@@ -1010,10 +1023,15 @@
         document.getElementById("robuxTotal").innerText = formatRupiah(price);
         document.getElementById("robuxLabel1").innerText = "Jumlah Robux";
         document.getElementById("robuxValue1").innerText = inputVal.toLocaleString('id-ID');
+        
+        // Label Rate disembunyikan via class CSS
         document.getElementById("robuxLabel2").innerText = "Rate";
         document.getElementById("robuxValue2").innerText = rate.toLocaleString('id-ID');
+        
         document.getElementById("robuxLabel3").innerText = "Robux Diterima";
-        document.getElementById("robuxValue3").innerText = received.toLocaleString('id-ID') + " (-30%)";
+        // TULISAN (-30%) DIHAPUS DI SINI
+        document.getElementById("robuxValue3").innerText = received.toLocaleString('id-ID'); 
+        
         document.getElementById("robuxLabel4").innerText = "Total Harga";
         document.getElementById("robuxValue4").innerText = formatRupiah(price);
         document.getElementById("robuxFormula").innerText = 
@@ -1026,8 +1044,10 @@
         document.getElementById("robuxTotal").innerText = formatRupiah(price);
         document.getElementById("robuxLabel1").innerText = "Robux Diterima";
         document.getElementById("robuxValue1").innerText = inputVal.toLocaleString('id-ID');
+        
         document.getElementById("robuxLabel2").innerText = "Rate";
         document.getElementById("robuxValue2").innerText = rate.toLocaleString('id-ID');
+
         document.getElementById("robuxLabel3").innerText = "Harga Gamepass";
         document.getElementById("robuxValue3").innerText = seller.toLocaleString('id-ID');
         document.getElementById("robuxLabel4").innerText = "Total Harga";
@@ -1042,8 +1062,10 @@
         document.getElementById("robuxTotal").innerText = formatRupiah(inputVal);
         document.getElementById("robuxLabel1").innerText = "Jumlah Rupiah";
         document.getElementById("robuxValue1").innerText = formatRupiah(inputVal);
+        
         document.getElementById("robuxLabel2").innerText = "Rate";
         document.getElementById("robuxValue2").innerText = rate.toLocaleString('id-ID');
+
         document.getElementById("robuxLabel3").innerText = "Robux Diterima";
         document.getElementById("robuxValue3").innerText = rb.toLocaleString('id-ID');
         document.getElementById("robuxLabel4").innerText = "Harga Gamepass";
@@ -1060,7 +1082,6 @@
 
     function resetRobux() {
       document.getElementById("robuxInput").value = "";
-      // Rate input line removed because input no longer exists
       document.getElementById("robuxResultTable").classList.remove("active");
     }
 
@@ -1076,7 +1097,6 @@
       });
     }
 
-    // Fungsi Tombol Beli (Salin Format Pesan & Buka Discord)
     function buyRobux() {
       const total = document.getElementById("robuxTotal").innerText;
       const formula = document.getElementById("robuxFormula").innerText;
@@ -1084,8 +1104,6 @@
       
       navigator.clipboard.writeText(message).then(() => {
         showToast();
-        
-        // Delay sebentar agar user sempat lihat toast
         setTimeout(() => {
             window.open(discordLink, '_blank');
         }, 1500);
@@ -1102,7 +1120,6 @@
     function showToast() {
       const toast = document.getElementById("toast");
       toast.classList.add("show");
-      
       setTimeout(() => {
         toast.classList.remove("show");
       }, 3000);
@@ -1111,7 +1128,6 @@
     function toggleTheme() {
       document.body.classList.toggle("light");
       const icon = document.getElementById("theme-icon");
-      
       if (document.body.classList.contains("light")) {
         icon.className = "fas fa-sun";
       } else {
@@ -1119,7 +1135,6 @@
       }
     }
 
-    // Inisialisasi
     document.addEventListener('DOMContentLoaded', function() {
       setTimeout(() => {
         document.getElementById("robuxInput").focus();
