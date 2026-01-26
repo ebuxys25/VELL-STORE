@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RBX MARKET - Kalkulator Robux</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Load Config File (Pastikan file ini ada di folder yang sama) -->
+  <script src="config.js"></script>
+
   <style>
     :root {
       /* Dark Theme */
@@ -112,7 +116,6 @@
     .brand-logo {
       width: 3rem;
       height: 3rem;
-      /* Removed gradient background to let image show */
       background: transparent; 
       border-radius: 0.75rem;
       display: flex;
@@ -122,15 +125,14 @@
       font-size: 1.25rem;
       color: white;
       flex-shrink: 0;
-      overflow: hidden; /* Ensures image stays within rounded corners */
+      overflow: hidden;
       box-shadow: 0 4px 10px rgba(88, 101, 242, 0.4);
     }
     
-    /* Styling the image inside the logo container */
     .brand-logo img {
       width: 100%;
       height: 100%;
-      object-fit: cover; /* Ensures the image covers the area without distortion */
+      object-fit: cover;
     }
     
     .brand-name-container {
@@ -140,14 +142,13 @@
     
     .brand-name {
       font-size: 1.75rem;
-      font-weight: 800; /* Boldness slightly increased */
-      /* Gradient Text */
+      font-weight: 800; 
       background: linear-gradient(135deg, #5865F2, #eb459e);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       letter-spacing: -0.03125rem;
-      text-transform: uppercase; /* FORCE UPPERCASE as requested */
+      text-transform: uppercase; 
     }
     
     /* Theme Toggle */
@@ -821,7 +822,7 @@
           <span>Informasi Rate</span>
         </div>
         <p class="important-notice-text">
-          Rate Robux terupdate tersedia di server Discord kami. Bergabunglah untuk info harga terbaik!
+          Rate Robux sudah di-set otomatis. Untuk perubahan harga, admin akan update via config.
         </p>
       </div>
       <!-- Button Opens Discord -->
@@ -856,10 +857,7 @@
         
         <div id="quickRp" class="quick-buttons" style="display: none;"></div>
         
-        <div class="input-group">
-          <label class="input-label">Rate 1 Robux (Rp)</label>
-          <input type="number" class="input-field" id="rateInput" placeholder="0" oninput="debounceHitungRobux()" min="0">
-        </div>
+        <!-- INPUT RATE DIHAPUS DI SINI -->
         
         <div class="result-table" id="robuxResultTable">
           <div class="result-total">
@@ -935,9 +933,10 @@
     let mode = "before";
     let debounceTimer;
     
-    // --- CONFIGURATION ---
-    // Link Discord Final
-    const discordInviteLink = "https://discord.gg/5wKzxaydh6"; 
+    // --- CONFIG CHECK ---
+    // Pastikan config.js sudah diload sebelum script ini jalan
+    let currentRate = (typeof DEFAULT_RATE !== 'undefined') ? DEFAULT_RATE : 85;
+    let discordLink = (typeof DISCORD_INVITE_LINK !== 'undefined') ? DISCORD_INVITE_LINK : "#";
     // ---------------------
 
     function formatRupiah(angka) {
@@ -991,10 +990,13 @@
 
     function hitungRobux() {
       let inputVal = parseFloat(document.getElementById("robuxInput").value) || 0;
-      let rate = parseFloat(document.getElementById("rateInput").value) || 0;
+      
+      // RATE DIAMBIL DARI VARIABLE, BUKAN DARI INPUT
+      let rate = currentRate; 
+      
       let resultTable = document.getElementById("robuxResultTable");
       
-      if (inputVal <= 0 || rate <= 0) {
+      if (inputVal <= 0) {
         resultTable.classList.remove("active");
         return;
       }
@@ -1058,7 +1060,7 @@
 
     function resetRobux() {
       document.getElementById("robuxInput").value = "";
-      document.getElementById("rateInput").value = "";
+      // Rate input line removed because input no longer exists
       document.getElementById("robuxResultTable").classList.remove("active");
     }
 
@@ -1085,16 +1087,16 @@
         
         // Delay sebentar agar user sempat lihat toast
         setTimeout(() => {
-            window.open(discordInviteLink, '_blank');
+            window.open(discordLink, '_blank');
         }, 1500);
       }).catch(err => {
         console.error('Gagal menyalin: ', err);
-        window.open(discordInviteLink, '_blank'); 
+        window.open(discordLink, '_blank'); 
       });
     }
 
     function checkRate() {
-      window.open(discordInviteLink, '_blank');
+      window.open(discordLink, '_blank');
     }
 
     function showToast() {
