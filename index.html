@@ -856,7 +856,7 @@
         <div class="input-group">
           <!-- Default label text updated to match 'after' mode (Robux input) -->
           <label class="input-label" id="robuxInputLabel">Masukkan jumlah Robux</label>
-          <input type="number" class="input-field" id="robuxInput" placeholder="0" oninput="debounceHitungRobux()" autofocus min="0">
+          <input type="text" class="input-field" id="robuxInput" placeholder="0" oninput="formatInput(this)" onkeyup="debounceHitungRobux()">
         </div>
         
         <!-- Quick Rp buttons (Hidden by default karena mode awal Robux) -->
@@ -963,13 +963,40 @@
       }).format(angka);
     }
 
+    // --- FUNGSI FORMAT ANGKA OTOMATIS (TITIK RIBUAN) ---
+    function formatInput(el) {
+      // Ambil nilai saat ini
+      let value = el.value;
+      // Hapus semua karakter kecuali angka
+      let cleanValue = value.replace(/\D/g, '');
+      
+      // Jika kosong, biarkan kosong
+      if (cleanValue === '') {
+        el.value = '';
+        return;
+      }
+
+      // Konversi ke integer
+      let number = parseInt(cleanValue, 10);
+      
+      // Format dengan titik pemisah ribuan (Indonesia style: 1.000)
+      let formatted = number.toLocaleString('id-ID');
+      
+      // Update value input
+      el.value = formatted;
+      
+      // Simpan nilai mentah (tanpa titik) di atribut data untuk kalkulasi
+      el.dataset.raw = number;
+    }
+    // -------------------------------------------------
+
     function setMode(m) {
       mode = m;
       
-      // --- 2. RESET LOGIN INPUT SAAT GANTI TAB ---
+      // --- RESET LOGIN INPUT SAAT GANTI TANPA FOCUS ---
       document.getElementById("robloxUser").value = "";
-      document.getElementById("robloxUser").focus();
-      // -----------------------------------------
+      // FOCUS DIHAPUS SUPAYA KEYBOARD NGGAK MUNCUL
+      // --------------------------------------------------
 
       document.querySelectorAll(".tab-button").forEach(b => b.classList.remove("active"));
       document.getElementById("tab-" + m).classList.add("active");
@@ -981,6 +1008,7 @@
       
       // Reset input angka juga biar bersih
       input.value = "";
+      input.dataset.raw = ""; // Reset raw data juga
       document.getElementById("robuxResultTable").classList.remove("active");
 
       // Show/Hide Quick Rp Buttons
@@ -1015,7 +1043,8 @@
     }
 
     function hitungRobux() {
-      let inputVal = parseFloat(document.getElementById("robuxInput").value) || 0;
+      // Ambil nilai dari dataset.raw (angka bersih) atau 0 jika kosong
+      let inputVal = parseInt(document.getElementById("robuxInput").dataset.raw) || 0;
       let rate = currentRate; 
       
       let resultTable = document.getElementById("robuxResultTable");
@@ -1070,12 +1099,15 @@
     }
 
     function setRp(val) {
-      document.getElementById("robuxInput").value = val;
+      const input = document.getElementById("robuxInput");
+      input.value = val.toLocaleString('id-ID'); // Format langsung
+      input.dataset.raw = val; // Simpan angka bersih
       hitungRobux();
     }
 
     function resetRobux() {
       document.getElementById("robuxInput").value = "";
+      document.getElementById("robuxInput").dataset.raw = "";
       document.getElementById("robloxUser").value = ""; // Reset Login juga
       document.getElementById("robuxResultTable").classList.remove("active");
     }
@@ -1164,12 +1196,8 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      // Panggil setMode('after') saat load agar UI konsisten dengan variable mode
+      // Panggil setMode('after') saat load agar UI konsisten
       setMode('after');
-      
-      setTimeout(() => {
-        document.getElementById("robloxUser").focus();
-      }, 300);
     });
   </script>
 </body>
