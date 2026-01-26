@@ -899,12 +899,14 @@
             <i class="fas fa-redo"></i> Reset
           </button>
           
+          <!-- TOMBOL WHATSAPP DIPERBAHUI -->
           <button class="action-button whatsapp-buy" onclick="buyRobuxWA()">
-            <i class="fab fa-whatsapp"></i> WhatsApp
+            <i class="fab fa-whatsapp"></i> Beli Lewat WhatsApp
           </button>
           
+          <!-- TOMBOL DISCORD DIPERBAHUI -->
           <button class="action-button discord-buy" onclick="buyRobuxDiscord()">
-            <i class="fab fa-discord"></i> Discord
+            <i class="fab fa-discord"></i> Beli Lewat Discord
           </button>
         </div>
         
@@ -931,7 +933,7 @@
   <div id="toast" class="toast">
     <i class="fas fa-check-circle" style="color: var(--success); font-size: 1.5rem;"></i>
     <div>
-      <div style="font-weight: 700;">Membuka WhatsApp...</div>
+      <div style="font-weight: 700;">Membuka Pembelian WhatsApp...</div>
       <div style="font-size: 0.8rem; color: var(--text-secondary);">Pesan order otomatis terkirim.</div>
     </div>
   </div>
@@ -1017,10 +1019,10 @@
       if (m === "rupiah") {
         label.innerText = "Masukkan jumlah IDR";
         input.placeholder = "0";
-        infoContent.innerHTML = "Mode IDR → Robux: Konversi Rupiah ke Robux dengan memperhitungan setelah potongan pajak";
+        infoContent.innerHTML = "Mode IDR → Robux : Konversi Rupiah ke Robux dengan perhitungan setelah potongan pajak dari roblox";
         
         if(quickDiv.innerHTML === "") {
-            for (let i = 1; i <= 10; i++) {
+            for (let i =1; i <= 10; i++) {
             let val = i * 10000;
             let btn = document.createElement("button");
             btn.className = "quick-button";
@@ -1033,7 +1035,7 @@
         // Mode Default Utama
         label.innerText = "Jumlah Robux";
         input.placeholder = "0";
-        infoContent.innerHTML = "Mode Robux → IDR: Masukkan jumlah Robux yang ingin kamu terima, sistem akan menghitung harga Gamepass yang harus dibayar.";
+        infoContent.innerHTML = "Mode Robux → IDR : Masukkan jumlah Robux yang ingin kamu pesan, sistem akan menghitung harga Gamepass yang harus buat.";
       } 
     }
 
@@ -1163,7 +1165,8 @@
 
     function showToastWA() {
       const toast = document.getElementById("toast");
-      toast.innerHTML = `<i class="fab fa-whatsapp" style="color: var(--whatsapp-color); font-size: 1.5rem;"></i><div><div style="font-weight: 700;">Membuka WhatsApp...</div><div style="font-size: 0.8rem; color: var(--text-secondary);">Pesan order otomatis terkirim.</div></div>`;
+      // Toast text disesuaikan dengan tombol
+      toast.innerHTML = `<i class="fab fa-whatsapp" style="color: var(--whatsapp-color); font-size: 1.5rem;"></i><div><div style="font-weight: 700;">Membuka Pembelian WhatsApp...</div><div style="font-size: 0.8rem; color: var(--text-secondary);">Pesan order otomatis terkirim.</div></div>`;
       toast.classList.add("show");
       setTimeout(() => {
         toast.classList.remove("show");
@@ -1175,7 +1178,8 @@
 
     function showToastDiscord() {
       const toast = document.getElementById("toast");
-      toast.innerHTML = `<i class="fab fa-discord" style="color: var(--discord-color); font-size: 1.5rem;"></i><div><div style="font-weight: 700;">Pesan Disalin!</div><div style="font-size: 0.8rem; color: var(--text-secondary);">Membuka Discord...</div></div>`;
+      // Toast text disesuaikan dengan tombol
+      toast.innerHTML = `<i class="fab fa-discord" style="color: var(--discord-color); font-size: 1.5rem;"></i><div><div style="font-weight: 700;">Membuka Pembelian Discord...</div><div style="font-size: 0.8rem; color: var(--text-secondary);">Membuka Discord...</div></div>`;
       toast.classList.add("show");
       setTimeout(() => {
         toast.classList.remove("show");
@@ -1202,5 +1206,3 @@
   </script>
 </body>
 </html>
-
-
