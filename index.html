@@ -565,18 +565,6 @@
       color: var(--text-primary);
     }
     
-    .result-formula {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 0.625rem;
-      padding: 0.9375rem;
-      font-family: 'Courier New', monospace;
-      font-size: 0.875rem;
-      color: var(--discord-color);
-      text-align: center;
-      word-break: break-all;
-    }
-    
     /* Info Box */
     .info-box {
       background: var(--info-bg);
@@ -851,28 +839,32 @@
         
         <div class="tabs-container">
           <div class="tabs">
-            <button class="tab-button active" onclick="setMode('before')" id="tab-before">Before Tax</button>
-            <button class="tab-button" onclick="setMode('after')" id="tab-after">After Tax</button>
-            <button class="tab-button" onclick="setMode('rupiah')" id="tab-rupiah">Rp → Robux</button>
+            <!-- Tab After Tax DIUBAH NAMANYA JADI Robux -> Rp -->
+            <button class="tab-button" onclick="setMode('after')" id="tab-after">Robux → Rp</button>
+            
+            <!-- Tab Rp -> Robux (Default) -->
+            <button class="tab-button active" onclick="setMode('rupiah')" id="tab-rupiah">Rp → Robux</button>
           </div>
         </div>
         
         <div class="input-group">
-          <label class="input-label" id="robuxInputLabel">Masukkan jumlah Robux</label>
+          <!-- Default label text updated to match 'rupiah' mode -->
+          <label class="input-label" id="robuxInputLabel">Masukkan jumlah Rupiah</label>
           <input type="number" class="input-field" id="robuxInput" placeholder="0" oninput="debounceHitungRobux()" autofocus min="0">
         </div>
         
-        <div id="quickRp" class="quick-buttons" style="display: none;"></div>
+        <!-- Quick Rp buttons shown by default -->
+        <div id="quickRp" class="quick-buttons"></div>
         
         <div class="result-table" id="robuxResultTable">
           <div class="result-total">
-            <div class="result-total-label">Total</div>
+            <div class="result-total-label" id="totalLabel">Total</div>
             <div class="result-total-value" id="robuxTotal">Rp 0</div>
           </div>
           
           <div class="result-details">
             <div class="result-detail-item">
-              <div class="result-detail-label" id="robuxLabel1">Jumlah Robux</div>
+              <div class="result-detail-label" id="robuxLabel1">Jumlah Rupiah</div>
               <div class="result-detail-value" id="robuxValue1">0</div>
             </div>
             
@@ -887,14 +879,12 @@
               <div class="result-detail-value" id="robuxValue3">0</div>
             </div>
             <div class="result-detail-item">
-              <div class="result-detail-label" id="robuxLabel4">Total Harga</div>
-              <div class="result-detail-value" id="robuxValue4">Rp 0</div>
+              <div class="result-detail-label" id="robuxLabel4">Harga Gamepass</div>
+              <div class="result-detail-value" id="robuxValue4">0</div>
             </div>
           </div>
           
-          <div class="result-formula" id="robuxFormula">
-            Formula akan muncul di sini
-          </div>
+          <!-- Bagian Formula DIHAPUS SESUAI REQUEST -->
         </div>
         
         <!-- Tombol Aksi: Reset, WA, Discord -->
@@ -917,8 +907,9 @@
             <i class="fas fa-info-circle info-icon"></i>
             <span>Informasi</span>
           </div>
+          <!-- Default info content updated -->
           <div class="info-content" id="robuxInfoContent">
-            Mode Before Tax: Harga sebelum potongan 30% yang diterima pembeli
+            Mode Rp → Robux: Konversi Rupiah ke Robux dengan memperhitungan potongan 30%
           </div>
         </div>
       </div>
@@ -940,7 +931,8 @@
   </div>
 
   <script>
-    let mode = "before";
+    // --- 1. INITIALIZE MODE TO 'rupiah' AS REQUESTED ---
+    let mode = "rupiah"; 
     let debounceTimer;
     
     // --- LOAD CONFIGURATIONS ---
@@ -969,6 +961,7 @@
 
     function setMode(m) {
       mode = m;
+      // Update tab styles
       document.querySelectorAll(".tab-button").forEach(b => b.classList.remove("active"));
       document.getElementById("tab-" + m).classList.add("active");
 
@@ -976,31 +969,33 @@
       let label = document.getElementById("robuxInputLabel");
       let infoContent = document.getElementById("robuxInfoContent");
       let quickDiv = document.getElementById("quickRp");
+      
+      // Show/Hide Quick Rp Buttons
       quickDiv.style.display = (m === "rupiah") ? "grid" : "none";
 
       if (m === "rupiah") {
         label.innerText = "Masukkan jumlah Rupiah";
         input.placeholder = "0";
         infoContent.innerHTML = "Mode Rp → Robux: Konversi Rupiah ke Robux dengan memperhitungan potongan 30%";
-        quickDiv.innerHTML = "";
-        for (let i = 1; i <= 10; i++) {
-          let val = i * 10000;
-          let btn = document.createElement("button");
-          btn.className = "quick-button";
-          btn.innerText = formatRupiah(val);
-          btn.onclick = () => { setRp(val); };
-          quickDiv.appendChild(btn);
+        
+        // Generate Quick Buttons only if empty
+        if(quickDiv.innerHTML === "") {
+            for (let i = 1; i <= 10; i++) {
+            let val = i * 10000;
+            let btn = document.createElement("button");
+            btn.className = "quick-button";
+            btn.innerText = formatRupiah(val);
+            btn.onclick = () => { setRp(val); };
+            quickDiv.appendChild(btn);
+          }
         }
-      } else if (m === "before") {
-        label.innerText = "Masukkan jumlah Robux";
-        input.placeholder = "0";
-        infoContent.innerHTML = "Mode Before Tax: Harga sebelum potongan 30% yang diterima pembeli. Contoh: 1000 Robux = 700 Robux diterima";
       } else if (m === "after") {
-        label.innerText = "Masukkan jumlah Robux (buyer terima)";
+        // "after" sekarang menjadi mode "Robux -> Rp"
+        label.innerText = "Masukkan jumlah Robux yang diinginkan";
         input.placeholder = "0";
-        infoContent.innerHTML = "Mode After Tax: Seller harus mengirim lebih banyak Robux agar buyer menerima jumlah yang diinginkan. Contoh: Buyer mau 700 Robux, seller kirim 1000 Robux";
-      }
-      debounceHitungRobux();
+        infoContent.innerHTML = "Mode Robux → Rp: Masukkan jumlah Robux yang ingin kamu terima, sistem akan menghitung harga Gamepass yang harus dibayar.";
+      } 
+      // Bagian "before" sudah dihapus logikanya
     }
 
     function debounceHitungRobux() {
@@ -1021,60 +1016,68 @@
       
       resultTable.classList.add("active");
       
-      if (mode === "before") {
-        let received = Math.floor(inputVal * 0.7);
-        let price = inputVal * rate;
+      if (mode === "after") {
+        // Logika "Robux -> Rp" (Dulu After Tax)
+        // Input = Robux yang ingin diterima.
+        // Seller harus mengirim Robux / 0.7
+        // Harga = (Robux / 0.7) * Rate
+        
+        let targetRobux = inputVal;
+        let sellerRobux = Math.ceil(targetRobux / 0.7); // Pembulatan ke atas
+        let price = sellerRobux * rate;
         
         document.getElementById("robuxTotal").innerText = formatRupiah(price);
-        document.getElementById("robuxLabel1").innerText = "Jumlah Robux";
-        document.getElementById("robuxValue1").innerText = inputVal.toLocaleString('id-ID');
+        document.getElementById("totalLabel").innerText = "Total Harga";
         
-        document.getElementById("robuxLabel2").innerText = "Rate";
-        document.getElementById("robuxValue2").innerText = rate.toLocaleString('id-ID');
+        // Detail 1: Target Robux (Input User)
+        document.getElementById("robuxLabel1").innerText = "Robux Ingin Diterima";
+        document.getElementById("robuxValue1").innerText = targetRobux.toLocaleString('id-ID');
         
-        document.getElementById("robuxLabel3").innerText = "Robux Diterima";
-        document.getElementById("robuxValue3").innerText = received.toLocaleString('id-ID'); 
-        
-        document.getElementById("robuxLabel4").innerText = "Total Harga";
-        document.getElementById("robuxValue4").innerText = formatRupiah(price);
-        document.getElementById("robuxFormula").innerText = 
-          `${inputVal} × ${rate.toLocaleString('id-ID')} = ${formatRupiah(price)} (Diterima: ${received.toLocaleString('id-ID')})`;
-          
-      } else if (mode === "after") {
-        let seller = Math.ceil(inputVal / 0.7);
-        let price = seller * rate;
-        
-        document.getElementById("robuxTotal").innerText = formatRupiah(price);
-        document.getElementById("robuxLabel1").innerText = "Robux Diterima";
-        document.getElementById("robuxValue1").innerText = inputVal.toLocaleString('id-ID');
-        
+        // Detail 2: Rate (Hidden by CSS class, but we set it anyway)
         document.getElementById("robuxLabel2").innerText = "Rate";
         document.getElementById("robuxValue2").innerText = rate.toLocaleString('id-ID');
 
-        document.getElementById("robuxLabel3").innerText = "Harga Gamepass";
-        document.getElementById("robuxValue3").innerText = seller.toLocaleString('id-ID');
-        document.getElementById("robuxLabel4").innerText = "Total Harga";
+        // Detail 3: Harga Gamepass (Robux yang dikirim Seller)
+        document.getElementById("robuxLabel3").innerText = "Robux Dikirim (Gamepass)";
+        document.getElementById("robuxValue3").innerText = sellerRobux.toLocaleString('id-ID');
+        
+        // Detail 4: Total Harga
+        document.getElementById("robuxLabel4").innerText = "Total Harga (Rp)";
         document.getElementById("robuxValue4").innerText = formatRupiah(price);
-        document.getElementById("robuxFormula").innerText = 
-          `${seller.toLocaleString('id-ID')} × ${rate.toLocaleString('id-ID')} = ${formatRupiah(price)} (Diterima: ${inputVal.toLocaleString('id-ID')})`;
+        
+        // Bagian Formula DIHAPUS (Tidak ada document.getElementById("robuxFormula").innerText)
           
       } else if (mode === "rupiah") {
-        let rb = Math.floor((inputVal / rate) * 0.7);
-        let seller = Math.ceil(rb / 0.7);
+        // Logika "Rp -> Robux"
+        // Input = Rupiah
+        // Robux Diterima = (Rupiah / Rate) * 0.7
+        // Gamepass Price = Rupiah / Rate (Pembulatan ke atas untuk display gamepass)
         
-        document.getElementById("robuxTotal").innerText = formatRupiah(inputVal);
+        let rupiah = inputVal;
+        let estimatedRobuxRaw = rupiah / rate;
+        
+        // Hitung berapa robux yang diterima buyer (dikurang 30%)
+        // Rumusnya: (Rupiah / Rate) * 0.7
+        let robuxReceived = Math.floor(estimatedRobuxRaw * 0.7);
+        
+        // Hitung berapa nominal gamepass (untuk display di detail)
+        let gamepassPrice = Math.ceil(estimatedRobuxRaw);
+
+        document.getElementById("robuxTotal").innerText = formatRupiah(rupiah);
+        document.getElementById("totalLabel").innerText = "Total Uang";
         document.getElementById("robuxLabel1").innerText = "Jumlah Rupiah";
-        document.getElementById("robuxValue1").innerText = formatRupiah(inputVal);
+        document.getElementById("robuxValue1").innerText = formatRupiah(rupiah);
         
         document.getElementById("robuxLabel2").innerText = "Rate";
         document.getElementById("robuxValue2").innerText = rate.toLocaleString('id-ID');
 
         document.getElementById("robuxLabel3").innerText = "Robux Diterima";
-        document.getElementById("robuxValue3").innerText = rb.toLocaleString('id-ID');
+        document.getElementById("robuxValue3").innerText = robuxReceived.toLocaleString('id-ID');
+        
         document.getElementById("robuxLabel4").innerText = "Harga Gamepass";
-        document.getElementById("robuxValue4").innerText = seller.toLocaleString('id-ID');
-        document.getElementById("robuxFormula").innerText = 
-          `${formatRupiah(inputVal)} ÷ ${rate.toLocaleString('id-ID')} = ${rb.toLocaleString('id-ID')} Robux (Dikirim: ${seller.toLocaleString('id-ID')})`;
+        document.getElementById("robuxValue4").innerText = gamepassPrice.toLocaleString('id-ID');
+        
+        // Bagian Formula DIHAPUS (Tidak ada document.getElementById("robuxFormula").innerText)
       }
     }
 
@@ -1091,9 +1094,15 @@
     // Fungsi khusus untuk WhatsApp
     function buyRobuxWA() {
       const total = document.getElementById("robuxTotal").innerText;
-      const formula = document.getElementById("robuxFormula").innerText;
-      // Format pesan WhatsApp
-      const message = `Halo Admin, saya mau order Robux.\n\n💰 *Total:* ${total}\n📝 *Detail:* ${formula}\n\nMohon diproses ya!`;
+      const label1 = document.getElementById("robuxLabel1").innerText;
+      const value1 = document.getElementById("robuxValue1").innerText;
+      const label3 = document.getElementById("robuxLabel3").innerText;
+      const value3 = document.getElementById("robuxValue3").innerText;
+      const label4 = document.getElementById("robuxLabel4").innerText;
+      const value4 = document.getElementById("robuxValue4").innerText;
+      
+      // Format pesan WhatsApp (Tanpa Formula, Cuman Detail)
+      const message = `Halo Admin, saya mau order Robux.\n\n💰 *Total:* ${total}\n📊 *Rincian:*\n${label1}: ${value1}\n${label3}: ${value3}\n${label4}: ${value4}\n\nMohon diproses ya!`;
       
       // Encode URL agar aman untuk link
       const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
@@ -1107,8 +1116,14 @@
     // Fungsi khusus untuk Discord
     function buyRobuxDiscord() {
       const total = document.getElementById("robuxTotal").innerText;
-      const formula = document.getElementById("robuxFormula").innerText;
-      const message = `📋 **PESANAN BARU - RBX MARKET**\n💰 Total: ${total}\n📝 Detail: ${formula}\n\nMohon diproses ya Min!`;
+      const label1 = document.getElementById("robuxLabel1").innerText;
+      const value1 = document.getElementById("robuxValue1").innerText;
+      const label3 = document.getElementById("robuxLabel3").innerText;
+      const value3 = document.getElementById("robuxValue3").innerText;
+      const label4 = document.getElementById("robuxLabel4").innerText;
+      const value4 = document.getElementById("robuxValue4").innerText;
+
+      const message = `📋 **PESANAN BARU - RBX MARKET**\n💰 Total: ${total}\n📊 **Rincian:**\n**${label1}:** ${value1}\n**${label3}:** ${value3}\n**${label4}:** ${value4}\n\nMohon diproses ya Min!`;
       
       navigator.clipboard.writeText(message).then(() => {
         showToastDiscord();
@@ -1164,6 +1179,10 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
+      // --- 2. FORCE INITIALIZATION ON LOAD ---
+      // Panggil setMode('rupiah') saat load agar UI konsisten dengan variable mode
+      setMode('rupiah');
+      
       setTimeout(() => {
         document.getElementById("robuxInput").focus();
       }, 300);
