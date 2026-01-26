@@ -931,15 +931,15 @@
   </div>
 
   <script>
-    // --- 1. INITIALIZE MODE TO 'rupiah' AS REQUESTED ---
+    // --- 1. INITIALIZE MODE TO 'rupiah' ---
     let mode = "rupiah"; 
     let debounceTimer;
     
     // --- LOAD CONFIGURATIONS ---
-    // Cek apakah config.js terbaca, jika tidak gunakan nilai default
-    let currentRate = (typeof DEFAULT_RATE !== 'undefined') ? DEFAULT_RATE : 85;
-    let discordLink = (typeof DISCORD_INVITE_LINK !== 'undefined') ? DISCORD_INVITE_LINK : "#";
-    let bgImage = (typeof BACKGROUND_IMAGE !== 'undefined') ? BACKGROUND_IMAGE : "";
+    // Mengambil nilai dari config.js. Jika tidak terbaca (file hilang), gunakan nilai dari config lu.
+    let currentRate = (typeof DEFAULT_RATE !== 'undefined') ? DEFAULT_RATE : 80;
+    let discordLink = (typeof DISCORD_INVITE_LINK !== 'undefined') ? DISCORD_INVITE_LINK : "https://discord.gg/5wKzxaydh6";
+    let bgImage = (typeof BACKGROUND_IMAGE !== 'undefined') ? BACKGROUND_IMAGE : "background.jpg";
     let whatsappNumber = (typeof WHATSAPP_PHONE_NUMBER !== 'undefined') ? WHATSAPP_PHONE_NUMBER : "6283821170532";
 
     // Apply Background Image if exists
@@ -995,7 +995,6 @@
         input.placeholder = "0";
         infoContent.innerHTML = "Mode Robux → Rp: Masukkan jumlah Robux yang ingin kamu terima, sistem akan menghitung harga Gamepass yang harus dibayar.";
       } 
-      // Bagian "before" sudah dihapus logikanya
     }
 
     function debounceHitungRobux() {
@@ -1017,50 +1016,34 @@
       resultTable.classList.add("active");
       
       if (mode === "after") {
-        // Logika "Robux -> Rp" (Dulu After Tax)
-        // Input = Robux yang ingin diterima.
-        // Seller harus mengirim Robux / 0.7
-        // Harga = (Robux / 0.7) * Rate
-        
+        // Logika "Robux -> Rp"
         let targetRobux = inputVal;
-        let sellerRobux = Math.ceil(targetRobux / 0.7); // Pembulatan ke atas
+        let sellerRobux = Math.ceil(targetRobux / 0.7); 
         let price = sellerRobux * rate;
         
         document.getElementById("robuxTotal").innerText = formatRupiah(price);
         document.getElementById("totalLabel").innerText = "Total Harga";
         
-        // Detail 1: Target Robux (Input User)
         document.getElementById("robuxLabel1").innerText = "Robux Ingin Diterima";
         document.getElementById("robuxValue1").innerText = targetRobux.toLocaleString('id-ID');
         
-        // Detail 2: Rate (Hidden by CSS class, but we set it anyway)
         document.getElementById("robuxLabel2").innerText = "Rate";
         document.getElementById("robuxValue2").innerText = rate.toLocaleString('id-ID');
 
-        // Detail 3: Harga Gamepass (Robux yang dikirim Seller)
         document.getElementById("robuxLabel3").innerText = "Robux Dikirim (Gamepass)";
         document.getElementById("robuxValue3").innerText = sellerRobux.toLocaleString('id-ID');
         
-        // Detail 4: Total Harga
         document.getElementById("robuxLabel4").innerText = "Total Harga (Rp)";
         document.getElementById("robuxValue4").innerText = formatRupiah(price);
-        
-        // Bagian Formula DIHAPUS (Tidak ada document.getElementById("robuxFormula").innerText)
           
       } else if (mode === "rupiah") {
         // Logika "Rp -> Robux"
-        // Input = Rupiah
-        // Robux Diterima = (Rupiah / Rate) * 0.7
-        // Gamepass Price = Rupiah / Rate (Pembulatan ke atas untuk display gamepass)
-        
         let rupiah = inputVal;
         let estimatedRobuxRaw = rupiah / rate;
         
-        // Hitung berapa robux yang diterima buyer (dikurang 30%)
-        // Rumusnya: (Rupiah / Rate) * 0.7
+        // Rumus potongan 30%
         let robuxReceived = Math.floor(estimatedRobuxRaw * 0.7);
         
-        // Hitung berapa nominal gamepass (untuk display di detail)
         let gamepassPrice = Math.ceil(estimatedRobuxRaw);
 
         document.getElementById("robuxTotal").innerText = formatRupiah(rupiah);
@@ -1076,8 +1059,6 @@
         
         document.getElementById("robuxLabel4").innerText = "Harga Gamepass";
         document.getElementById("robuxValue4").innerText = gamepassPrice.toLocaleString('id-ID');
-        
-        // Bagian Formula DIHAPUS (Tidak ada document.getElementById("robuxFormula").innerText)
       }
     }
 
@@ -1101,10 +1082,8 @@
       const label4 = document.getElementById("robuxLabel4").innerText;
       const value4 = document.getElementById("robuxValue4").innerText;
       
-      // Format pesan WhatsApp (Tanpa Formula, Cuman Detail)
       const message = `Halo Admin, saya mau order Robux.\n\n💰 *Total:* ${total}\n📊 *Rincian:*\n${label1}: ${value1}\n${label3}: ${value3}\n${label4}: ${value4}\n\nMohon diproses ya!`;
       
-      // Encode URL agar aman untuk link
       const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
       
       showToastWA();
@@ -1142,12 +1121,10 @@
 
     function showToastWA() {
       const toast = document.getElementById("toast");
-      // Ubah icon dan teks sementara untuk WA
       toast.innerHTML = `<i class="fab fa-whatsapp" style="color: var(--whatsapp-color); font-size: 1.5rem;"></i><div><div style="font-weight: 700;">Membuka WhatsApp...</div><div style="font-size: 0.8rem; color: var(--text-secondary);">Pesan order otomatis terkirim.</div></div>`;
       toast.classList.add("show");
       setTimeout(() => {
         toast.classList.remove("show");
-        // Reset toast ke default setelah hilang
         setTimeout(() => {
             toast.innerHTML = `<i class="fas fa-check-circle" style="color: var(--success); font-size: 1.5rem;"></i><div><div style="font-weight: 700;">Pesan Disalin!</div><div style="font-size: 0.8rem; color: var(--text-secondary);">Paste di Discord untuk order.</div></div>`;
         }, 500);
@@ -1156,12 +1133,10 @@
 
     function showToastDiscord() {
       const toast = document.getElementById("toast");
-      // Set icon dan teks untuk Discord
       toast.innerHTML = `<i class="fab fa-discord" style="color: var(--discord-color); font-size: 1.5rem;"></i><div><div style="font-weight: 700;">Pesan Disalin!</div><div style="font-size: 0.8rem; color: var(--text-secondary);">Membuka Discord...</div></div>`;
       toast.classList.add("show");
       setTimeout(() => {
         toast.classList.remove("show");
-        // Reset toast ke default
         setTimeout(() => {
             toast.innerHTML = `<i class="fas fa-check-circle" style="color: var(--success); font-size: 1.5rem;"></i><div><div style="font-weight: 700;">Pesan Disalin!</div><div style="font-size: 0.8rem; color: var(--text-secondary);">Paste di Discord untuk order.</div></div>`;
         }, 500);
@@ -1179,8 +1154,6 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      // --- 2. FORCE INITIALIZATION ON LOAD ---
-      // Panggil setMode('rupiah') saat load agar UI konsisten dengan variable mode
       setMode('rupiah');
       
       setTimeout(() => {
