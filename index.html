@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RBX MARKET - Robux Gamepass 5 Hari</title>
+  <title>RBX MARKET - Kalkulator Robux</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
-  <!-- Load Config File (Wajib ada di folder yang sama) -->
+  <!-- Load Config File -->
   <script src="config.js"></script>
 
   <style>
@@ -27,8 +27,9 @@
       --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
       --info-bg: rgba(79, 70, 229, 0.1);
       --info-border: #4f46e5;
-      --discord-color: #5865F2; 
-      --buy-button: #5865F2; 
+      --discord-color: #5865F2;
+      --whatsapp-color: #25D366;
+      --buy-button: #25D366; /* Warna tombol beli hijau default */
       --important-bg: rgba(245, 158, 11, 0.1);
       --important-border: #f59e0b;
       
@@ -83,7 +84,6 @@
       transition: all 0.3s ease;
       min-height: 100vh;
       overflow-x: hidden;
-      /* Default fallback background color */
       background-color: #0a0e1a; 
     }
 
@@ -95,11 +95,10 @@
       width: 100%;
       height: 100%;
       z-index: -1;
-      /* Background akan diset oleh JS dari config.js */
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      /* Overlay gelap agar teks tetap terbaca di background apapun */
+      /* Overlay gelap */
       box-shadow: inset 0 0 100px rgba(0,0,0,0.7);
     }
     
@@ -463,10 +462,10 @@
       border: 1px solid var(--border-color);
     }
     
-    .action-button.discord-buy {
+    .action-button.buy {
       background: var(--buy-button);
       color: white;
-      box-shadow: 0 4px 12px rgba(88, 101, 242, 0.3);
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
     }
     
     .action-button:hover {
@@ -478,9 +477,8 @@
       box-shadow: 0 0.625rem 0.9375rem -0.1875rem rgba(79, 70, 229, 0.3);
     }
     
-    .action-button.discord-buy:hover {
-      background: #4752c4;
-      box-shadow: 0 0.625rem 0.9375rem -0.1875rem rgba(88, 101, 242, 0.4);
+    .action-button.buy:hover {
+      opacity: 0.9;
     }
     
     /* Result Table */
@@ -801,7 +799,6 @@
     <div class="brand-container">
       <div class="brand">
         <div class="brand-logo">
-            <!-- LOCAL FILE REFERENCE: icon.png -->
             <img src="icon.png" alt="RBX MARKET Logo">
         </div>
         <div class="brand-name-container">
@@ -821,16 +818,16 @@
       <div class="important-notice-content">
         <div class="important-notice-title">
           <i class="fas fa-exclamation-triangle"></i>
-          <span>Informasi Harga</span>
+          <span>Informasi Rate</span>
         </div>
         <p class="important-notice-text">
-          Nikmati harga Robux yang lebih hemat khusus member server Discord kami.
+          Rate Robux sudah di-set otomatis. Untuk perubahan harga, admin akan update via config.
         </p>
       </div>
       <!-- Button Opens Discord -->
       <button class="important-notice-button" onclick="checkRate()">
         <i class="fab fa-discord"></i>
-        Join Discord
+        Cek Rate
       </button>
     </div>
 
@@ -841,7 +838,7 @@
           <div class="card-icon">
             <i class="fas fa-coins"></i>
           </div>
-          <h2 class="card-title">Robux Gamepass 5 Hari</h2>
+          <h2 class="card-title">Kalkulator Robux</h2>
         </div>
         
         <div class="tabs-container">
@@ -871,7 +868,6 @@
               <div class="result-detail-value" id="robuxValue1">0</div>
             </div>
             
-            <!-- RATE DETAILS DIHAPUS DENGAN CLASS 'hidden-detail' -->
             <div class="result-detail-item hidden-detail" id="robuxRateItem">
               <div class="result-detail-label" id="robuxLabel2">Rate</div>
               <div class="result-detail-value" id="robuxValue2">0</div>
@@ -892,14 +888,16 @@
           </div>
         </div>
         
-        <!-- Tombol "Salin" sudah DIHAPUS dari sini -->
         <div class="action-buttons">
           <button class="action-button secondary" onclick="resetRobux()">
             <i class="fas fa-redo"></i> Reset
           </button>
-          <!-- Tombol Beli mengambil alih fungsi copy -->
-          <button class="action-button primary discord-buy" onclick="buyRobux()">
-            <i class="fab fa-discord"></i> Beli
+          <button class="action-button primary" onclick="copyRobuxResult()">
+            <i class="fas fa-copy"></i> Salin
+          </button>
+          <!-- Tombol Beli Dinamis -->
+          <button class="action-button buy" onclick="buyRobux()" id="buyButton">
+            <i class="fab fa-whatsapp" id="buyIcon"></i> <span id="buyText">Beli</span>
           </button>
         </div>
         
@@ -923,10 +921,10 @@
 
   <!-- Toast Notification Element -->
   <div id="toast" class="toast">
-    <i class="fab fa-discord" style="color: var(--discord-color); font-size: 1.5rem;"></i>
+    <i class="fas fa-check-circle" style="color: var(--success); font-size: 1.5rem;"></i>
     <div>
-      <div style="font-weight: 700;">Pesan Disalin!</div>
-      <div style="font-size: 0.8rem; color: var(--text-secondary);">Membuka Discord...</div>
+      <div style="font-weight: 700;">Disalin!</div>
+      <div style="font-size: 0.8rem; color: var(--text-secondary);">Siap dikirim ke pembeli.</div>
     </div>
   </div>
 
@@ -935,16 +933,35 @@
     let debounceTimer;
     
     // --- LOAD CONFIGURATIONS ---
-    // Cek apakah config.js terbaca, jika tidak gunakan nilai default
     let currentRate = (typeof DEFAULT_RATE !== 'undefined') ? DEFAULT_RATE : 85;
     let discordLink = (typeof DISCORD_INVITE_LINK !== 'undefined') ? DISCORD_INVITE_LINK : "#";
     let bgImage = (typeof BACKGROUND_IMAGE !== 'undefined') ? BACKGROUND_IMAGE : "";
+    let waNumber = (typeof WHATSAPP_PHONE_NUMBER !== 'undefined') ? WHATSAPP_PHONE_NUMBER : "";
 
     // Apply Background Image if exists
     if(bgImage) {
         const bgElement = document.getElementById('app-background');
         if(bgElement) {
             bgElement.style.backgroundImage = `url('${bgImage}')`;
+        }
+    }
+
+    // Setup Tombol Beli (Cek apakah pakai WA atau Discord)
+    function setupBuyButton() {
+        const btn = document.getElementById('buyButton');
+        const icon = document.getElementById('buyIcon');
+        const text = document.getElementById('buyText');
+
+        if (waNumber && waNumber !== "") {
+            // Mode WhatsApp
+            btn.style.background = "var(--whatsapp-color)";
+            icon.className = "fab fa-whatsapp";
+            text.innerText = "Beli via WA";
+        } else {
+            // Mode Discord
+            btn.style.background = "var(--discord-color)";
+            icon.className = "fab fa-discord";
+            text.innerText = "Beli via Discord";
         }
     }
     // ---------------------
@@ -968,9 +985,7 @@
       let quickDiv = document.getElementById("quickRp");
       quickDiv.style.display = (m === "rupiah") ? "grid" : "none";
 
-      if (m === "rate") {
-        // Mode ini tidak dipakai lagi
-      } else if (m === "rupiah") {
+      if (m === "rupiah") {
         label.innerText = "Masukkan jumlah Rupiah";
         input.placeholder = "0";
         infoContent.innerHTML = "Mode Rp → Robux: Konversi Rupiah ke Robux dengan memperhitungan potongan 30%";
@@ -1021,7 +1036,6 @@
         document.getElementById("robuxLabel1").innerText = "Jumlah Robux";
         document.getElementById("robuxValue1").innerText = inputVal.toLocaleString('id-ID');
         
-        // Label Rate disembunyikan via class CSS
         document.getElementById("robuxLabel2").innerText = "Rate";
         document.getElementById("robuxValue2").innerText = rate.toLocaleString('id-ID');
         
@@ -1081,22 +1095,43 @@
       document.getElementById("robuxResultTable").classList.remove("active");
     }
 
-    // Fungsi buyRobux sekarang menangani copy + open link karena tombol copy dihapus
+    function copyRobuxResult() {
+      const total = document.getElementById("robuxTotal").innerText;
+      const formula = document.getElementById("robuxFormula").innerText;
+      const text = `*Order RBX MARKET*\n\n${total}\n${formula}`;
+      
+      navigator.clipboard.writeText(text).then(() => {
+        showToast();
+      }).catch(err => {
+        console.error('Gagal menyalin: ', err);
+      });
+    }
+
+    // Fungsi Beli Dinamis (Bisa WA atau Discord)
     function buyRobux() {
       const total = document.getElementById("robuxTotal").innerText;
       const formula = document.getElementById("robuxFormula").innerText;
-      const message = `📋 **PESANAN BARU - RBX MARKET**\n💰 Total: ${total}\n📝 Detail: ${formula}\n\nMohon diproses ya Min!`;
       
-      navigator.clipboard.writeText(message).then(() => {
-        showToast();
-        setTimeout(() => {
-            window.open(discordLink, '_blank');
-        }, 1500); // Delay 1.5 detik agar user sempat lihat toast
-      }).catch(err => {
-        console.error('Gagal menyalin: ', err);
-        // Jika gagal copy, tetap buka link
-        window.open(discordLink, '_blank'); 
-      });
+      // Tentukan platform tujuan
+      let targetLink = "";
+      let platformName = "";
+
+      if (waNumber && waNumber !== "") {
+          targetLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(`*PESANAN BARU - RBX MARKET*\n\n${total}\n${formula}\n\nMohon diproses ya Min!`)}`;
+          platformName = "WhatsApp";
+      } else {
+          // Fallback ke Discord kalau WA kosong
+          navigator.clipboard.writeText(`📋 **PESANAN BARU - RBX MARKET**\n💰 Total: ${total}\n📝 Detail: ${formula}\n\nMohon diproses ya Min!`).then(() => {
+             showToast(); 
+          });
+          setTimeout(() => {
+              window.open(discordLink, '_blank');
+          }, 1500);
+          return; // Stop di sini untuk mode Discord
+      }
+
+      // Eksekusi ke WhatsApp
+      window.open(targetLink, '_blank');
     }
 
     function checkRate() {
@@ -1122,6 +1157,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
+      setupBuyButton(); // Jalankan setup tombol saat load
       setTimeout(() => {
         document.getElementById("robuxInput").focus();
       }, 300);
