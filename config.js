@@ -12,7 +12,7 @@ const WHATSAPP_PHONE_NUMBER = "6283821170532";
 
 // 3. PENGATURAN RATE
 // Rate default Robux (Otomatis terisi di kalkulator)
-const DEFAULT_RATE = 75;
+const DEFAULT_RATE = 80;
 
 // 4. PENGATURAN TAMPILAN
 // Ganti background. Bisa pakai nama file "background.jpg" atau link URL gambar.
@@ -27,19 +27,20 @@ const LOGIN_PACKAGES = {
     { amount: 2200, price: 292000 }
   ],
   regular: [
-    { amount: 80, price: 16000 },
+    { amount: 80, price: 15500 },
     { amount: 160, price: 31000 },
     { amount: 240, price: 46000 },
     { amount: 320, price: 61000 },
-    { amount: 500, price: 73000 },
-    { amount: 1000, price: 146000 },
-    { amount: 1500, price: 219000 },
-    { amount: 2000, price: 292000 }
+    { amount: 500, price: 71500 },
+    { amount: 1000, price: 143000 },
+    { amount: 1500, price: 214500 },
+    { amount: 2000, price: 286000 }
   ]
 };
 
 // ==========================================
 // AKHIR KONFIGURASI
 // ==========================================
+
 
 
