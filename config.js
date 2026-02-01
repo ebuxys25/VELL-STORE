@@ -22,8 +22,8 @@ const BACKGROUND_IMAGE = "background.jpg";
 // Edit daftar paket di sini. Format: { amount: JumlahRobux, price: HargaDalamRupiah }
 const LOGIN_PACKAGES = {
   premium: [
-    { amount: 450, price: 74500 },
-    { amount: 1000, price: 148000 },
+    { amount: 450, price: 73500 },
+    { amount: 1000, price: 147000 },
     { amount: 2200, price: 292000 }
   ],
   regular: [
@@ -41,6 +41,7 @@ const LOGIN_PACKAGES = {
 // ==========================================
 // AKHIR KONFIGURASI
 // ==========================================
+
 
 
 
